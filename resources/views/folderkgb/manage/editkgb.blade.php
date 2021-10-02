@@ -10,7 +10,7 @@
     <div class="col-md-16 mt-5">
         <div class="card">
             <div class="card-header">
-                <h3>Entry Data KGB</h3>
+                <h3>Form Edit Data KGB</h3>
             </div>
             <div class="card-body">
     

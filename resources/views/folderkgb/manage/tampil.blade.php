@@ -74,12 +74,12 @@
                                 <th>Nama</th>
                                 <th>Jabatan</th>
                                 <th>Pangkat</th>
-                                <th>Last KGB</th>
-                                <th>Deadline</th>
+                                <th width="120px">Last KGB</th>
+                                <th width="120px">Deadline</th>
                                 
                                 <th>File</th>
-                                <th>Update</th>
-                                <th width="160px">Action</th>
+                                <th width="140px">Update</th>
+                                <th width="100px">Action</th>
                             </tr>
                         </thead>
                         <body>
@@ -87,20 +87,27 @@
 
                            
                             @foreach ($kgb as $index=> $data )
-                
+                            
+                          
+                            
+
                             <tr>
+
                                 <td scope="row">{{ $index+1 }}</td>
                                 <td>{{ $data->nip }} </td>
                                 <td>{{ $data->nama_pegawai }} </td>
                                 <td>{{ $data->jabatan }} </td>
                                 <td>{{ $data->pangkat }} </td>
                                 <td>{{ date('d-M-Y',strtotime($data->kgb_terakhir)) }} </td>
-                                <td>{{ 'Rumus' }} </td>
-                                <td><a href="{{ asset('storage/gambar/' .$data->pendukung) }}">Data </a></td>
+                                <td>{{ $nextkgb = date('d-M-Y', strtotime('+700 days', strtotime($data->kgb_terakhir))); }} </td>
+                                <td>
+                                    <a href="{{ asset('storage/gambar/' .$data->pendukung) }}">See</a></td>
                                 <td>{{ date('d-M-Y',strtotime($data->updated_at)) }} </td>
-                                <td><a href="{{ route('tampil.edit',$data->id) }}" class="btn btn-success">Ubah</a>
-                                    <a href="#" class="btn btn-danger">Hapus</a> </td>
+                                <td><a href="{{ route('tampil.edit',$data->id) }}" class="btn btn-success">...</a>
+                                    <a href="#" class="btn btn-danger">x</a> </td>
                             </tr>
+                                
+                            
                         @endforeach
                        
                         </body>
