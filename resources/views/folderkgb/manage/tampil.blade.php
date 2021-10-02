@@ -94,11 +94,11 @@
                                 <td>{{ $data->nama_pegawai }} </td>
                                 <td>{{ $data->jabatan }} </td>
                                 <td>{{ $data->pangkat }} </td>
-                                <td>{{ $data->kgb_terakhir }} </td>
+                                <td>{{ date('d-M-Y',strtotime($data->kgb_terakhir)) }} </td>
                                 <td>{{ 'Rumus' }} </td>
                                 <td><a href="{{ asset('storage/gambar/' .$data->pendukung) }}">Data </a></td>
-                                <td>{{ $data->updated_at }} </td>
-                                <td><a href="#" class="btn btn-success">Ubah</a>
+                                <td>{{ date('d-M-Y',strtotime($data->updated_at)) }} </td>
+                                <td><a href="{{ route('tampil.edit',$data->id) }}" class="btn btn-success">Ubah</a>
                                     <a href="#" class="btn btn-danger">Hapus</a> </td>
                             </tr>
                         @endforeach

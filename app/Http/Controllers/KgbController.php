@@ -97,8 +97,11 @@ class KgbController extends Controller
      */
     public function edit($id)
     {
-        //
+        //untuk mengedit data
+        $kgb=Ekgb::find($id);
+        return view('folderkgb.manage.editkgb',compact('kgb')); //kembalikan le folder.folder.nama view, kemudian dilempar ke variable awal
     }
+    
 
     /**
      * Update the specified resource in storage.
@@ -109,8 +112,36 @@ class KgbController extends Controller
      */
     public function update(Request $request, $id)
     {
+        //ddd($request);
         //
+        $validated=$request->validate([
+            'nip'=>'required',
+            'nama_pegawai'=>'required|min:3',
+            'jabatan' => 'required',
+            'pangkat' => 'required',
+            'kgb_terakhir' => 'required',
+            'status' => 'required',
+            'pendukung' => 'required|max:1024',
+        ]);
+        
+        //bikin variabel baru tujuan ke model, filed database request pairingkan ke nama filed yang ada di form create 
+        $kgb=Ekgb::find($id);
+        $kgb->nip=$request->nip;
+        $kgb->nama_pegawai=$request->nama_pegawai;
+        $kgb->jabatan=$request->jabatan;
+        $kgb->pangkat=$request->pangkat;
+        $kgb->kgb_terakhir=$request->kgb_terakhir;
+        $kgb->status=$request->status;
+        $kgb->pendukung=$request->pendukung->hashName();
+        $kgb->save();
+        if(!$kgb){
+            return back()->with('error','Data gagal disimpan, cek kodingan!');
+        }
+        else{
+            return back()->with('success','Data berhasil disimpan ya gaes');
+        }
     }
+    
 
     /**
      * Remove the specified resource from storage.

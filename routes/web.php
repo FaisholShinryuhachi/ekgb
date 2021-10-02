@@ -15,6 +15,7 @@ Route::group(['middleware' => 'auth'], function () {
  
 Route::get('home', [HomeController::class, 'index'])->name('home');
 Route::resource('tampil',KgbController::class);
+
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
  
 });
