@@ -161,8 +161,8 @@ class KgbController extends Controller
         return Datatables::of($kgb)
             ->addColumn('action', function ($kgb) {
                 return '
-                        <a target="_blank" rel="noopener noreferrer" href="file/' . $kgb->pendukung . '"><button class="btn btn-primary btn-sm"> <i class="material-icons">picture_as_pdf</i> </button></a>
-                        <a target="_blank" rel="noopener noreferrer" href="file/' . $kgb->pendukung2 . '"><button class="btn btn-primary btn-sm"> <i class="material-icons">picture_as_pdf</i> </button></a>
+                        <a target="_blank" rel="noopener noreferrer" href="storage/gambar/' . $kgb->pendukung . '"><button class="btn btn-primary btn-sm"> <i class="material-icons">picture_as_pdf</i> </button></a>
+                        <a target="_blank" rel="noopener noreferrer" href="storage/gambar/' . $kgb->pendukung2 . '"><button class="btn btn-primary btn-sm"> <i class="material-icons">picture_as_pdf</i> </button></a>
                         <button class="edit-button-table btn btn-warning btn-sm" value=' . $kgb->id . '> <i class="material-icons">mode_edit</i> </button>
                         <button class="delete btn btn-danger btn-sm" value=' . $kgb->id . '> <i class="material-icons">delete</i> </button>
                         ';

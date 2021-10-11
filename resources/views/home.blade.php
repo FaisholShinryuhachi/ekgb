@@ -65,7 +65,7 @@
                 </div>
                 <div class="card-body">
                     <h5>Selamat datang di halaman dashboard, <strong>{{ Auth::user()->name }}</strong></h5>
-                    <a href="{{ url('tampil') }}" class="btn btn-primary">Tampil Data</a>
+                    <a href="{{ url('test') }}" class="btn btn-primary">Tampil Data</a>
                   
 
                  
