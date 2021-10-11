@@ -34,9 +34,9 @@
                                 <th>NIP</th>
                                 <th>Nama</th>
                                 <th>Jabatan</th>
-                                <th>Pangkat</th>
-                                <th>KGB Terakhir</th>
-                                <th>Deadline</th>
+                                <th>Pangkat/Gol</th>
+                                <th>TMT KGB</th>
+                                <th>KGB Selanjutnya</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
@@ -72,11 +72,11 @@
                             <input id="jabatan" type="text" class="form-control" name="jabatan">
                         </div>
                         <div class="mb-3">
-                            <label class="form-label"> Pangkat </label>
+                            <label class="form-label"> Pangkat/Golongan </label>
                             <input id="pangkat" type="text" class="form-control" name="pangkat">
                         </div>
                         <div class="mb-3">
-                            <label class="form-label"> KGB Terakhir </label>
+                            <label class="form-label"> TMT KGB Terakhir </label>
                             <input id="kgb_terakhir" type="date" class="form-control" name="kgb_terakhir">
                         </div>
                         <div class="mb-3">

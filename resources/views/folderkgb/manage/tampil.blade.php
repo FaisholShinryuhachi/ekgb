@@ -72,7 +72,7 @@
                                 <th>No</th>
                                 <th>NIP</th>
                                 <th>Nama</th>
-                                <th>Jabatan</th>
+                                <th>Jabatanku</th>
                                 <th>Pangkat</th>
                                 <th width="120px">Last KGB</th>
                                 <th width="120px">Deadline</th>
