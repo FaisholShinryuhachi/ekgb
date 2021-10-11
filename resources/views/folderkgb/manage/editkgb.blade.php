@@ -14,7 +14,7 @@
             </div>
             <div class="card-body">
     
-    <form method="POST" action="{{ route('tampil.edit',$kgb->id) }}" enctype="multipart/form-data">
+    <form method="POST" action="{{ route('tampil.update',$kgb->id) }}" enctype="multipart/form-data">
         <input type="hidden" name="_method" value="PUT">
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
         

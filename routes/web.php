@@ -20,4 +20,13 @@ Route::resource('tampil',KgbController::class);
  
 });
 
+Route::get('test',function(){ return view('material.table');});
+Route::get('ekgb/get',[KgbController::class, 'getEkgb']);
+Route::get('file/{name}',[KgbController::class, 'getfile']);
+Route::get('ekgb/edit-get/{id}',[KgbController::class, 'getForEdit']);
+Route::post('ekgb/post',[KgbController::class, 'postEkgb']);
+Route::post('ekgb/edit',[KgbController::class, 'editEkgb']);
+
+Route::get('sandbox',[KgbController::class, 'sandbox']);
+
 
