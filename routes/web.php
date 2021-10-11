@@ -26,7 +26,8 @@ Route::get('file/{name}',[KgbController::class, 'getfile']);
 Route::get('ekgb/edit-get/{id}',[KgbController::class, 'getForEdit']);
 Route::post('ekgb/post',[KgbController::class, 'postEkgb']);
 Route::post('ekgb/edit',[KgbController::class, 'editEkgb']);
+Route::get('ekgb/delete/{id}',[KgbController::class, 'deleteEkgb']);
 
-Route::get('sandbox',[KgbController::class, 'sandbox']);
+// Route::get('sandbox',[KgbController::class, 'sandbox']);
 
 

@@ -164,7 +164,7 @@ class KgbController extends Controller
                         <a target="_blank" rel="noopener noreferrer" href="file/' . $kgb->pendukung . '"><button class="btn btn-primary btn-sm"> <i class="material-icons">picture_as_pdf</i> </button></a>
                         <a target="_blank" rel="noopener noreferrer" href="file/' . $kgb->pendukung2 . '"><button class="btn btn-primary btn-sm"> <i class="material-icons">picture_as_pdf</i> </button></a>
                         <button class="edit-button-table btn btn-warning btn-sm" value=' . $kgb->id . '> <i class="material-icons">mode_edit</i> </button>
-                        <button class="edit btn btn-danger btn-sm" value=' . $kgb->id . '> <i class="material-icons">delete</i> </button>
+                        <button class="delete btn btn-danger btn-sm" value=' . $kgb->id . '> <i class="material-icons">delete</i> </button>
                         ';
             })
             ->make(true);
@@ -248,6 +248,17 @@ class KgbController extends Controller
         return response()->json(['data' => $kgb]);
     }
 
+    public function deleteEkgb($id)
+    {
+        $kgb = Ekgb::where('id', $id)->first();
+        $kgb->delete();
+        if (!$kgb) {
+            return response()->json(['status' => 'Gagal']);
+        } else {
+            return response()->json(['status' => 'Sukses']);
+        }
+    }
+
     public function getFile($name)
     {
 
@@ -255,15 +266,4 @@ class KgbController extends Controller
         return response()->file($myFile);
     }
 
-    public function sandbox()
-    {
-
-        $pendukung = '2M70mMeEZH9TOZDudPbFFrQStRJxzoTc4ay1FW9N.jpg';
-        if (file_exists(storage_path("app\gambar\\" . $pendukung))) {
-            $hasil = File::delete(storage_path("app\gambar\\" . $pendukung));
-            dd($hasil);
-        } else {
-            dd('bad');
-        }
-    }
 }

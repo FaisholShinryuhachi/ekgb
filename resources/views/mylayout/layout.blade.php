@@ -148,6 +148,7 @@ The above copyright notice and this permission notice shall be included in all c
     </div>
 
     @yield('modal')
+    @yield('modal-hapus')
   </div>
   <!--   Core JS Files   -->
   <script src="{{ asset ('material/assets/js/core/jquery.min.js')}}"></script>

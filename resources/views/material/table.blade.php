@@ -51,10 +51,6 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    {{-- <h5 class="modal-title" id="exampleModalLongTitle">Tambah Data</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button> --}}
                 </div>
                 <div class="modal-body pl-5 pr-5">
                     <form id="add-form" method="POST" enctype="multipart/form-data">
@@ -88,21 +84,6 @@
                         </div>
                         <div class="mb-3">
                             <div id="pdf-preview">
-                                {{-- <div class="row mt-3 mb-3">
-                                    <div class="col-md-6">
-                                        <button class="edit btn btn-primary btn-sm"> <i class="material-icons">picture_as_pdf</i> </button>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <button class="edit btn btn-primary btn-sm"> <i class="material-icons">picture_as_pdf</i> </button>
-                                    </div>
-                                </div> --}}
-
-                                {{-- <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                                    <label class="form-check-label" for="flexSwitchCheckDefault">Default switch checkbox
-                                        input</label>
-                                </div> --}}
-
                             </div>
                             <div id="file-uploader">
                                 <label class="form-label">Pendukung</label>
@@ -135,79 +116,25 @@
     </div>
     <!-- [ Modal Add ] end -->
 
-    <!-- [ Modal Edit ] start -->
-    <div class="modal fade" id="edit-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+@endsection
+
+@section('modal-hapus')
+    <!-- [ Modal Delete ] start -->
+    <div class="modal fade" id="modal-hapus" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Tambah Data</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                <div class="modal-body">
+                    Anda Yakin ?
                 </div>
-                <div class="modal-body pl-5 pr-5">
-                    <form id="add-form" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        <div class="mb-3">
-                            <label class="form-label"> NIP </label>
-                            <input id="nip" type="text" class="form-control" name="nip">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label"> Nama </label>
-                            <input type="text" class="form-control" name="nama_pegawai">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label"> Jabatan </label>
-                            <input type="text" class="form-control" name="jabatan">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label"> Pangkat </label>
-                            <input type="text" class="form-control" name="pangkat">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label"> KGB Terakhir </label>
-                            <input type="date" class="form-control" name="kgb_terakhir">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label"> Status </label>
-                            <select name="status" class="form-control">
-                                <option value="Belum Diverifikasi">Belum Diverifikasi</option>
-                                <option value="Sudah Diverifikasi">Sudah Diverifikasi</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Pendukung</label>
-                            <div class="col-xs-8">
-                                <input class="form-control" type="file" name="pendukung">
-                            </div>
-                            <label class="form-label">Pendukung 2</label>
-                            <div class="col-xs-8">
-                                <input class="form-control" type="file" name="pendukung2">
-                            </div>
-
-                            <div id="add-alert">
-                            </div>
-                            <div id="finish-button">
-                            </div>
-
-                            {{-- <div class="mt-3">
-                                <center><button id="add-submit" type="submit" class="btn btn-primary">Simpan Data</button>
-                                </center>
-                            </div> --}}
-                            <div class="mt-3">
-                                <center><button type="reset" class="btn btn-danger">Reset</button></center>
-                            </div>
-                    </form>
-                </div>
-                <div class="modal-footer align-center">
-                    <button type="button" class="btn btn-warning" data-dismiss="modal">Tutup</button>
-                    {{-- <button type="button" class="btn btn-danger" id="confirm">Ya</button> --}}
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Batal</button>
+                    <button id="delete-confirm" type="button" class="btn btn-danger" id="confirm">Ya</button>
                 </div>
             </div>
         </div>
     </div>
-    <!-- [ Modal Edit ] end -->
+    <!-- [ Modal Delete ] end -->
 @endsection
 
 @push('scriptku')
@@ -262,12 +189,6 @@
                 });
             });
         }
-
-        $(document).ready(function() {
-            $('#myTable').on('click', '.edit', function() {
-                $('#exampleModal').modal('show');
-            });
-        });
 
         // ----------------------------------------------------------------
         // ---------------- Bagian untuk add ------------------------------
@@ -474,10 +395,27 @@
             });
         });
 
-        //Hadler untuk button shown
+        //Hadler untuk button shown edit pendukung
         $(document).ready(function() {
             $(document).on('click', '#show-pendukung', function() {
                 $('#file-uploader').show();
+            });
+        });
+
+        // ----------------------------------------------------------------
+        // ---------------- Bagian Hapus Table -----------------------------
+        // ----------------------------------------------------------------
+
+        $(document).ready(function() {
+            $('#myTable').on('click', '.delete', function() {
+                $('#modal-hapus').modal('show');
+                id = $(this).attr("value");
+                $('#delete-confirm').on('click', function() {
+                    $.get(`ekgb/delete/${id}`, (res) => {
+                        $('#modal-hapus').modal('hide');
+                        getDataTables();
+                    });
+                })
             });
         });
 
