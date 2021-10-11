@@ -266,4 +266,8 @@ class KgbController extends Controller
         return response()->file($myFile);
     }
 
+    public function deadlineEkgb(){
+
+    }
+
 }

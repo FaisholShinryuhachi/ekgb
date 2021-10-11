@@ -14,8 +14,12 @@
                     <div class="card-header card-header-primary pb-2 pt-2">
                         <button id="add-button" class="edit btn btn-primary btn-sm"> <i class="material-icons">add_circle</i>
                         </button>
-                        <button class="edit btn btn-success btn-sm" value='. $kgb->id .'> <i
-                                class="material-icons">picture_as_pdf</i> </button>
+                        <button id="semua" class="edit btn btn-success btn-sm"> <i
+                                class="material-icons">picture_as_pdf</i> Semua </button>
+                        <button id="deadline" class="edit btn btn-success btn-sm"> <i
+                                class="material-icons">picture_as_pdf</i> Dealine </button>
+                        <button id="aman" class="edit btn btn-success btn-sm"> <i
+                                class="material-icons">picture_as_pdf</i> Aman </button>
                     </div>
                 </div>
             </div>
