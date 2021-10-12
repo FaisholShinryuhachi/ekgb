@@ -10,12 +10,16 @@ class Ekgb extends Model
 {
     use HasFactory;
     protected $appends = ['deadline', 'stats'];
+    // Casting untuk datetime
+    protected $casts = [
+        'kgb_terakhir' => 'datetime:Y-M-d',
+    ];
 
     public function getDeadlineAttribute()
     {
         $date = new \DateTime($this->attributes['kgb_terakhir']);
         $date->add(new \DateInterval('P2Y'));
-        return $date->format('Y-m-d');
+        return $date->format('Y-M-d');
     }
 
     public function getStatsAttribute()

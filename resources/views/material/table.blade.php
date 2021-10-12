@@ -1,52 +1,58 @@
 @extends('mylayout.layout')
 
 @section('content')
-    <div class="col-md-12">
-        <div class="card card-plain">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="card-header card-header-primary">
-                        <h4 class="card-title mt-0"> Daftar Table EKGB</h4>
-                        {{-- <p class="card-category"> Here is a subtitle for this table</p> --}}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-plain">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card-header card-header-primary">
+                            <h4 class="card-title mt-0"> Daftar Table EKGB</h4>
+                            {{-- <p class="card-category"> Here is a subtitle for this table</p> --}}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card-header card-header-primary pb-2 pt-2">
+                            <button id="add-button" class="edit btn btn-primary btn-sm"> <i
+                                    class="material-icons">add_circle</i>
+                            </button>
+                            <button id="semua" class="edit btn btn-success btn-sm"> <i
+                                    class="material-icons">picture_as_pdf</i>
+                                Semua </button>
+                            <button id="deadline" class="edit btn btn-success btn-sm"> <i
+                                    class="material-icons">picture_as_pdf</i> Dealine </button>
+                            <button id="aktif" class="edit btn btn-success btn-sm"> <i
+                                    class="material-icons">picture_as_pdf</i>
+                                Aman </button>
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="card-header card-header-primary pb-2 pt-2">
-                        <button id="add-button" class="edit btn btn-primary btn-sm"> <i class="material-icons">add_circle</i>
-                        </button>
-                        <button id="semua" class="edit btn btn-success btn-sm"> <i
-                                class="material-icons">picture_as_pdf</i> Semua </button>
-                        <button id="deadline" class="edit btn btn-success btn-sm"> <i
-                                class="material-icons">picture_as_pdf</i> Dealine </button>
-                        <button id="aman" class="edit btn btn-success btn-sm"> <i
-                                class="material-icons">picture_as_pdf</i> Aman </button>
+
+
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <div id="tableku">
+                            <table id="myTable" class="table table-striped table-bordered" width="100%" cellspacing="0">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>NIP</th>
+                                        <th>Nama</th>
+                                        <th>Jabatan</th>
+                                        <th>Pangkat/Gol</th>
+                                        <th>TMT KGB</th>
+                                        <th>KGB Selanjutnya</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
                     </div>
-                </div>
-            </div>
-
-
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table id="myTable" class="table table-striped table-bordered" width="100%" cellspacing="0">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th>ID</th>
-                                <th>NIP</th>
-                                <th>Nama</th>
-                                <th>Jabatan</th>
-                                <th>Pangkat/Gol</th>
-                                <th>TMT KGB</th>
-                                <th>KGB Selanjutnya</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                    </table>
                 </div>
             </div>
         </div>
     </div>
-
 
 @section('modal')
     <!-- [ Modal Add ] start -->
@@ -144,18 +150,18 @@
 @push('scriptku')
     <script type="text/javascript">
         $(document).ready(function() {
-            getDataTables();
+            getDataTables('/ekgb/get');
         });
 
 
         // function get untuk data tables
-        const getDataTables = () => {
+        const getDataTables = (url) => {
             $(document).ready(function() {
                 $('#myTable').DataTable({
                     processing: true,
                     bDestroy: true,
                     serverSide: true,
-                    ajax: '{{ '/ekgb/get' }}',
+                    ajax: url,
                     "createdRow": function(row, data, dataIndex) {
                         if (data['stats'] === true) {
                             // $(row).css("background-color", "Orange");
@@ -317,7 +323,7 @@
                                 </div>`);
                     clear ? clearInput() : null;
                     // clearInput();
-                    getDataTables();
+                    getDataTables('/ekgb/get');
 
                 },
                 error: function(e) {
@@ -417,12 +423,136 @@
                 $('#delete-confirm').on('click', function() {
                     $.get(`ekgb/delete/${id}`, (res) => {
                         $('#modal-hapus').modal('hide');
-                        getDataTables();
+                        getDataTables('/ekgb/get');
                     });
                 })
             });
         });
 
+        // ----------------------------------------------------------------
+        // ---------------- Fitur Khusus -----------------------------
+        // ----------------------------------------------------------------
+
+        $(document).ready(function() {
+            $('#semua').on('click', function() {
+                $('#tableku').html(`<table id="myTable" class="table table-striped table-bordered" width="100%" cellspacing="0">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>NIP</th>
+                                    <th>Nama</th>
+                                    <th>Jabatan</th>
+                                    <th>Pangkat/Gol</th>
+                                    <th>TMT KGB</th>
+                                    <th>KGB Selanjutnya</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                        </table>`);
+                getDataTables('/ekgb/get');
+            });
+        });
+        $(document).ready(function() {
+            $('#deadline').on('click', function() {
+                $('#tableku').html(`<table id="myTable" class="table table-striped table-bordered" width="100%" cellspacing="0">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>NIP</th>
+                                    <th>Nama</th>
+                                    <th>Jabatan</th>
+                                    <th>Pangkat/Gol</th>
+                                    <th>TMT KGB</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                        </table>`);
+
+                $('#myTable').DataTable({
+                    processing: true,
+                    bDestroy: true,
+                    serverSide: true,
+                    ajax: '/ekgb/deadline',
+                    columns: [{
+                            data: 'id',
+                        },
+                        {
+                            data: 'nip',
+                        },
+                        {
+                            data: 'nama_pegawai',
+                        },
+                        {
+                            data: 'jabatan',
+                        },
+                        {
+                            data: 'pangkat',
+                        },
+                        {
+                            data: 'kgb_terakhir',
+                        },
+                        {
+                            data: 'status',
+                        },
+                        {
+                            data: 'action',
+                        },
+                    ]
+                });
+            });
+        });
+        $(document).ready(function() {
+            $('#aktif').on('click', function() {
+                $('#tableku').html(`<table id="myTable" class="table table-striped table-bordered" width="100%" cellspacing="0">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>NIP</th>
+                                    <th>Nama</th>
+                                    <th>Jabatan</th>
+                                    <th>Pangkat/Gol</th>
+                                    <th>TMT KGB</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                        </table>`);
+
+                $('#myTable').DataTable({
+                    processing: true,
+                    bDestroy: true,
+                    serverSide: true,
+                    ajax: '/ekgb/aktif',
+                    columns: [{
+                            data: 'id',
+                        },
+                        {
+                            data: 'nip',
+                        },
+                        {
+                            data: 'nama_pegawai',
+                        },
+                        {
+                            data: 'jabatan',
+                        },
+                        {
+                            data: 'pangkat',
+                        },
+                        {
+                            data: 'kgb_terakhir',
+                        },
+                        {
+                            data: 'status',
+                        },
+                        {
+                            data: 'action',
+                        },
+                    ]
+                });
+            });
+        });
     </script>
 @endpush
 

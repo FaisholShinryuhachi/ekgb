@@ -27,7 +27,16 @@ Route::get('ekgb/edit-get/{id}',[KgbController::class, 'getForEdit']);
 Route::post('ekgb/post',[KgbController::class, 'postEkgb']);
 Route::post('ekgb/edit',[KgbController::class, 'editEkgb']);
 Route::get('ekgb/delete/{id}',[KgbController::class, 'deleteEkgb']);
-Route::get('ekgb/dealine',[KgbController::class, 'deadlineEkgb']);
+Route::get('ekgb/deadline',[KgbController::class, 'deadlineEkgb']);
+Route::get('ekgb/aktif',[KgbController::class, 'aktifEkgb']);
+
+Route::get('test2',function(){ return view('material.dashboard');});
+
+// Api untuk dashboard
+Route::get('api/dashboard',[KgbController::class, 'dashboardApi']);
+// Route::prefix('api/dashboard')->group(function () {
+//     Route::get('deadline',[KgbController::class, 'deadlineApi']);
+// });
 
 // Route::get('sandbox',[KgbController::class, 'sandbox']);
 

@@ -103,11 +103,11 @@ The above copyright notice and this permission notice shall be included in all c
       <!-- End Navbar -->
       <div class="content">
         <div class="container-fluid">
-          <div class="row">
+          {{-- <div class="row"> --}}
 
             @yield('content')
 
-          </div>
+          {{-- </div> --}}
         </div>
       </div>
       {{-- <footer class="footer">

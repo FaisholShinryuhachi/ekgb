@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use \Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\File;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+use PhpParser\Node\Stmt\Return_;
 
 class KgbController extends Controller
 {
@@ -266,8 +269,68 @@ class KgbController extends Controller
         return response()->file($myFile);
     }
 
-    public function deadlineEkgb(){
+    public function deadlineEkgb()
+    {
 
+        $date_now = Carbon::now();
+        $date_now = $date_now->format('Y-m-d');
+
+        $result = DB::table('ekgbs')
+            ->select('*')
+            ->whereRaw('DATEDIFF( DATE_ADD(kgb_terakhir, INTERVAL 2 YEAR), "' . $date_now . '") <= 60')
+            ->get();
+        // return response()->json(['data' => $result]);
+
+        return Datatables::of($result)
+            ->addColumn('action', function ($kgb) {
+                return '
+                        <a target="_blank" rel="noopener noreferrer" href="storage/gambar/' . $kgb->pendukung . '"><button class="btn btn-primary btn-sm"> <i class="material-icons">picture_as_pdf</i> </button></a>
+                        <a target="_blank" rel="noopener noreferrer" href="storage/gambar/' . $kgb->pendukung2 . '"><button class="btn btn-primary btn-sm"> <i class="material-icons">picture_as_pdf</i> </button></a>
+                        <button class="edit-button-table btn btn-warning btn-sm" value=' . $kgb->id . '> <i class="material-icons">mode_edit</i> </button>
+                        <button class="delete btn btn-danger btn-sm" value=' . $kgb->id . '> <i class="material-icons">delete</i> </button>
+                        ';
+            })
+            ->make(true);
     }
 
+    public function aktifEkgb()
+    {
+
+        $date_now = Carbon::now();
+        $date_now->format('Y-m-d');
+
+        $result = DB::table('ekgbs')
+            ->select('*')
+            ->whereRaw('DATEDIFF( DATE_ADD(kgb_terakhir, INTERVAL 2 YEAR), "2021-10-12") > 60')
+            ->get();
+        return response()->json(['data' => $result]);
+    }
+    // ----------------------------------------------------
+    // ------------ Bagian controller api dashboard --------
+    // ----------------------------------------------------
+
+    public function dashboardApi()
+    {
+        $date_now = Carbon::now();
+        $date_now = $date_now->format('Y-m-d');
+
+        $result = DB::table('ekgbs')
+            ->select('*')
+            ->whereRaw('DATEDIFF( DATE_ADD(kgb_terakhir, INTERVAL 2 YEAR), "' . $date_now . '") <= 60')
+            ->count();
+        $all = Ekgb::count();
+        $diproses = Ekgb::where('status', 'Sudah Diproses')->count();
+        $data = DB::table('ekgbs')
+            ->select('id', 'nama_pegawai', 'kgb_terakhir')
+            ->selectRaw('DATE_ADD(kgb_terakhir, INTERVAL 2 YEAR) AS deadline')
+            ->whereRaw('DATEDIFF( DATE_ADD(kgb_terakhir, INTERVAL 2 YEAR), "' . $date_now . '") <= 60')
+            ->take(4)
+            ->get();
+        return response()->json([
+            'deadline'  => $result,
+            'diproses'  => $diproses,
+            'total'     => $all,
+            'data'      => $data,
+        ]);
+    }
 }
