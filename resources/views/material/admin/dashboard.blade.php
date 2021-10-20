@@ -1,4 +1,30 @@
 @extends('mylayout.layout')
+
+@section('sidebar')
+    <div class="sidebar-wrapper">
+        <ul class="nav">
+            <li class="nav-item active ">
+                <a class="nav-link" href="{{ route('admin') }}">
+                    <i class="material-icons">dashboard</i>
+                    <p>Dashboard</p>
+                </a>
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link" href="{{ route('ekgb') }}">
+                    <i class="material-icons">content_paste</i>
+                    <p>Ekgb</p>
+                </a>
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link" href="{{route('user-table')}}">
+                    <i class="material-icons">switch_account</i>
+                    <p>User</p>
+                </a>
+            </li>
+        </ul>
+    </div>
+@endsection
+
 @section('content')
     {{-- Bagin Atas --}}
     <div class="row">
@@ -54,34 +80,10 @@
                         <thead class="text-warning">
                             <th>ID</th>
                             <th>Name</th>
-                            <th>Salary</th>
-                            <th>Country</th>
+                            <th>Kgb Terakhir</th>
+                            <th>Deadline</th>
                         </thead>
                         <tbody id="table-body">
-                            {{-- <tr>
-                                <td>1</td>
-                                <td>Dakota Rice</td>
-                                <td>$36,738</td>
-                                <td>Niger</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Minerva Hooper</td>
-                                <td>$23,789</td>
-                                <td>Curaçao</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>Sage Rodriguez</td>
-                                <td>$56,142</td>
-                                <td>Netherlands</td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>Philip Chaney</td>
-                                <td>$38,735</td>
-                                <td>Korea, South</td>
-                            </tr> --}}
                         </tbody>
                     </table>
                 </div>

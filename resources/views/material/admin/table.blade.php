@@ -1,5 +1,30 @@
 @extends('mylayout.layout')
 
+@section('sidebar')
+    <div class="sidebar-wrapper">
+        <ul class="nav">
+            <li class="nav-item  ">
+                <a class="nav-link" href="{{ route('admin') }}">
+                    <i class="material-icons">dashboard</i>
+                    <p>Dashboard</p>
+                </a>
+            </li>
+            <li class="nav-item active ">
+                <a class="nav-link" href="{{ route('ekgb') }}">
+                    <i class="material-icons">content_paste</i>
+                    <p>Ekgb</p>
+                </a>
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link" href="{{ route('user-table') }}">
+                    <i class="material-icons">switch_account</i>
+                    <p>User</p>
+                </a>
+            </li>
+        </ul>
+    </div>
+@endsection
+
 @section('content')
     <div class="row">
         <div class="col-md-12">
@@ -43,6 +68,7 @@
                                         <th>TMT KGB</th>
                                         <th>KGB Selanjutnya</th>
                                         <th>Status</th>
+                                        <th>Gaji</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -69,9 +95,27 @@
                             <label class="form-label"> NIP </label>
                             <input id="nip" type="text" class="form-control" name="nip">
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label"> Nama </label>
-                            <input id="nama_pegawai" type="text" class="form-control" name="nama_pegawai">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                {{-- <div class="mb-3">
+                                    <label class="form-label"> Nama </label>
+                                    <input placeholder="" disabled="true" id="nama_pegawai" type="text" class="form-control"
+                                        name="nama_pegawai">
+                                </div> --}}
+                                <label class="form-label"> Nama Pegawai </label>
+                                {{-- <div id="nama_pegawai" class="mb-3">
+                                    <select id="status" name="status" class="form-control">
+                                        <option value="Belum Diproses">Belum Diproses</option>
+                                        <option value="Sudah Diproses">Sudah Diproses</option>
+                                    </select>
+                                </div> --}}
+                                <select id="nama_pegawai" name="id_user" class="form-control">
+                                    {{-- <option selected='true' value="2">${res.data.name}</option> --}}
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <button id="show-user" type="button" class="btn btn-danger">Pilih</button>
+                            </div>
                         </div>
                         <div class="mb-3">
                             <label class="form-label"> Jabatan </label>
@@ -88,9 +132,13 @@
                         <div class="mb-3">
                             <label class="form-label"> Status </label>
                             <select id="status" name="status" class="form-control">
-                                <option value="Belum Diverifikasi">Belum Diverifikasi</option>
-                                <option value="Sudah Diverifikasi">Sudah Diverifikasi</option>
+                                <option value="Belum Diproses">Belum Diproses</option>
+                                <option value="Sudah Diproses">Sudah Diproses</option>
                             </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label"> Gaji </label>
+                            <input id="gaji" type="number" class="form-control" name="gaji">
                         </div>
                         <div class="mb-3">
                             <div id="pdf-preview">
@@ -147,10 +195,46 @@
     <!-- [ Modal Delete ] end -->
 @endsection
 
+@section('modal-user')
+    <!-- [ Modal User ] start -->
+    <div class="modal fade" id="modal-user" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    {{-- <h5 class="modal-title" id="exampleModalLongTitle">Pilih User</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"> --}}
+                </div>
+                <div class="modal-body pl-5 pr-5">
+                    <div class="table-responsive">
+                        <div>
+                            <table id="user-table" class="table table-striped table-bordered" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Nama</th>
+                                        <th>Email</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                {{-- <div class="modal-footer align-center">
+                    <button type="button" class="btn btn-warning tutup" data-dismiss="modal">Tutup</button>
+                    {{-- <button type="button" class="btn btn-danger" id="confirm">Ya</button> --}}
+            </div> --}}
+        </div>
+    </div>
+    </div>
+    <!-- [ Modal User ] end -->
+@endsection
+
 @push('scriptku')
     <script type="text/javascript">
         $(document).ready(function() {
-            getDataTables('/ekgb/get');
+            getDataTables('{{ route('api-get-ekgb') }}');
         });
 
 
@@ -193,6 +277,9 @@
                             data: 'status',
                         },
                         {
+                            data: 'gaji',
+                        },
+                        {
                             data: 'action',
                         },
                     ]
@@ -213,7 +300,7 @@
                     $('#submitku').on('click').prop('disabled', false)
                 }
                 let cek = $('#add-alert').find('.alert');
-                if (cek.length <= 1) {
+                if (cek.length >= 1) {
                     $('#add-alert').empty();
                 }
             });
@@ -222,6 +309,7 @@
         //Handler add Data
         $(document).ready(function() {
             $('#add-button').on('click', function() {
+                $('#nama_pegawai').attr('disabled', true);
                 $('#add-alert').empty();
                 $('#finish-button').empty().append(`<center><button id="add-submit" type="submit" class="btn btn-primary">Simpan Data</button>
                                 </center>`);
@@ -243,6 +331,7 @@
             $(document).on('click', '#add-submit', function(e) {
                 e.preventDefault();
                 $('#add-submit').on('click').prop('disabled', true);
+                $('#nama_pegawai').removeAttr('disabled')
 
                 let hasil = $(".form-control");
 
@@ -250,8 +339,10 @@
                     // $('#add-submit').on('click').prop('disabled', true);
                     let form = $('#add-form')[0];
                     let data = new FormData(form);
-                    tambaData(data, '/ekgb/post', true, 'Penambahan Data');
+                    tambaData(data, '{{ route('api-post-ekgb') }}', true, 'Penambahan Data');
                 } else {
+                    $('#nama_pegawai').attr('disabled', true);
+                    $('#add-submit').on('click').prop('disabled', true);
                     $('#add-alert').append(`<div class="alert alert-warning mt-3" role="alert">
                                     Form Tidak Bolek Kosong
                                 </div>`);
@@ -268,7 +359,8 @@
                     (!!data[2].value) &&
                     (!!data[3].value) &&
                     (!!data[4].value) &&
-                    (!!data[5].value)
+                    (!!data[5].value) &&
+                    (!!data[6].value)
                 ) {
                     return true;
                 } else {
@@ -282,7 +374,8 @@
                     (!!data[4].value) &&
                     (!!data[5].value) &&
                     (!!data[6].value) &&
-                    (!!data[7].value)
+                    (!!data[7].value) &&
+                    (!!data[8].value)
                 ) {
                     return true;
                 } else {
@@ -302,6 +395,9 @@
             $("#pangkat").val('');
             $("#kgb_terakhir").val('');
             $("#status").val('');
+            $("#gaji").val('');
+            $("#pendukung").val('');
+            $("#pendukung2").val('');
         }
 
         // Function tambah data
@@ -316,15 +412,16 @@
                 cache: false,
                 timeout: 800000,
                 success: function(data) {
-                    console.log(data.status);
+                    $('#nama_pegawai').attr('disabled', true);
                     $('#add-alert').empty();
                     $('#add-alert').append(`<div class="alert alert-warning mt-3" role="alert">
-                                    ${text} ${data.status}
+                                    ${data.status}
                                 </div>`);
-                    clear ? clearInput() : null;
-                    // clearInput();
-                    getDataTables('/ekgb/get');
-
+                    $('#add-submit').on('click').prop('disabled', true);
+                    if (data.code == '02') {
+                        clear ? clearInput() : null;
+                        getDataTables('{{ route('api-get-ekgb') }}');
+                    }
                 },
                 error: function(e) {
                     $('#add-alert').append(`<div class="alert alert-warning mt-3" role="alert">
@@ -340,19 +437,21 @@
 
         // Handler button edit
         $(document).ready(function() {
-            $('#myTable').on('click', '.edit-button-table', function() {
-                $(".form-control")[6].value = '';
+            // $('#myTable').on('click', '.edit-button-table', function() {
+            $(document).on('click', '.edit-button-table', function() {
+                $('#nama_pegawai').attr('disabled', true);
                 $(".form-control")[7].value = '';
+                $(".form-control")[8].value = '';
                 $('#add-alert').empty();
                 $('#file-uploader').hide();
                 $('#reset').hide();
-                $('#add-submit').on('click').prop('disabled', false);
+                // $('#add-submit').on('click').prop('disabled', false);
                 $('#add-modal').modal('show');
                 $('#finish-button').empty().append(`
                                 <center><button id="submitku" type="submit" class="btn btn-primary">Update Data</button>
                                 </center>
                                 `);
-
+                $('#submitku').prop('disabled', true);
                 $('.modal-header').html(`<h5 class="modal-title" id="exampleModalLongTitle">Edit Data</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -361,15 +460,29 @@
                 let id = '';
                 id = $(this).attr("value");
                 clearInput();
-                $.get(`ekgb/edit-get/${id}`, (res) => {
+                $.get(`api/ekgb/edit-get/${id}`, (res) => {
+                    let gaji = res.data.gaji;
+                    gaji = gaji.substring(3, gaji.length)
+                    gaji = gaji.substring(0, (gaji.length - 3))
+                    gaji = gaji.replaceAll('.', "")
+
                     $("#nip").val(res.data.nip);
                     $("#nama_pegawai").val(res.data.nama_pegawai);
                     $("#jabatan").val(res.data.jabatan);
                     $("#pangkat").val(res.data.pangkat);
-                    $("#kgb_terakhir").val(res.data.kgb_terakhir);
-                    $("#status").val(res.data.status);
-                    // $(".form-control")[6].value = res.data.pendukung;
-                    // $(".form-control")[7].value = res.data.pendukung2;
+                    $("#gaji").val(gaji);
+
+
+                    $('.form-control')[4].value = res.data.kgb_terakhir;
+
+                    if (res.data.status == 'Belum Diproses') {
+                        $("#status").val("Belum Diproses").attr('selected', 'selected');
+                    } else {
+                        $("#status").val("Sudah Diproses").attr('selected', 'selected');
+                    }
+                    $("#nama_pegawai").html(
+                        `<option selected='true' value="${res.data.id_user}">${res.data.nama_pegawai}</option>`
+                    );
 
                     $('#pdf-preview').empty().append(`<div class="row mt-3 mb-3">
                                     <div class="col-md-4">
@@ -387,6 +500,7 @@
 
                 $('#submitku').on('click', function(e) {
                     e.preventDefault();
+                    $('#nama_pegawai').removeAttr('disabled')
 
                     $('#submitku').on('click').prop('disabled', true);
                     let hasil = $(".form-control");
@@ -395,7 +509,7 @@
                         let form = $('#add-form')[0];
                         let data = new FormData(form);
                         data.append('id', id);
-                        tambaData(data, '/ekgb/edit', false, 'Update Data');
+                        tambaData(data, '{{ route('api-edit-ekgb') }}', false, 'Update Data');
                     } else {
                         $('#add-alert').append(`<div class="alert alert-warning mt-3" role="alert">
                                     Form Tidak Bolek Kosong
@@ -413,6 +527,78 @@
         });
 
         // ----------------------------------------------------------------
+        // ---------------- Bagian User Handler Table ---------------------
+        // ----------------------------------------------------------------
+
+        // Untuk show modal pilih user
+        $(document).ready(function() {
+            $(document).on('click', '#show-user', function() {
+                $('#add-modal').modal('hide');
+                setTimeout(function() {
+                    $('.modal-header').eq(1).html(`<h5 class="modal-title" id="exampleModalLongTitle">Pilih User</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>`);
+                    $('#modal-user').modal('show');
+                    setTimeout(function() {
+
+                        // function get untuk data tables
+                        $('#user-table').DataTable({
+                            processing: true,
+                            bDestroy: true,
+                            serverSide: true,
+                            pageLength: 5,
+                            lengthChange: false,
+                            ajax: '{{ route('api-get-kgb-user') }}',
+                            columns: [{
+                                    data: 'id',
+                                },
+                                {
+                                    data: 'name',
+                                },
+                                {
+                                    data: 'email',
+                                },
+                                {
+                                    data: 'action',
+                                },
+                            ]
+                        });
+                    }, 200);
+                }, 300);
+
+                $('#modal-user').on('click', '.pilih-user', function() {
+                    $('#modal-user').modal('hide');
+                    $('#add-submit').on('click').prop('disabled', false);
+                    $('#submitku').prop('disabled', false);
+                    $('#add-alert').empty();
+
+                    id = $(this).attr("value");
+
+                    $.get(`api/user/edit-get/${id}`, (res) => {
+                        $("#nama_pegawai").html(
+                            `<option selected='true' value="${res.data.id}">${res.data.name}</option>`
+                        );
+                    });
+                    setTimeout(function() {
+                        $('#add-modal').modal('show');
+                    }, 300);
+                });
+            });
+        });
+
+        // Untuk close table user 
+        $(document).ready(function() {
+            $('#modal-user').on('click', '.close', function() {
+                setTimeout(function() {
+                    $('#add-modal').modal('show');
+                }, 300);
+
+            });
+        });
+
+
+        // ----------------------------------------------------------------
         // ---------------- Bagian Hapus Table -----------------------------
         // ----------------------------------------------------------------
 
@@ -423,7 +609,7 @@
                 $('#delete-confirm').on('click', function() {
                     $.get(`ekgb/delete/${id}`, (res) => {
                         $('#modal-hapus').modal('hide');
-                        getDataTables('/ekgb/get');
+                        getDataTables('{{ route('api-get-ekgb') }}');
                     });
                 })
             });
@@ -446,11 +632,12 @@
                                     <th>TMT KGB</th>
                                     <th>KGB Selanjutnya</th>
                                     <th>Status</th>
+                                    <th>Gaji</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                         </table>`);
-                getDataTables('/ekgb/get');
+                getDataTables('{{ route('api-get-ekgb') }}');
             });
         });
         $(document).ready(function() {
@@ -465,6 +652,7 @@
                                     <th>Pangkat/Gol</th>
                                     <th>TMT KGB</th>
                                     <th>Status</th>
+                                    <th>Gaji</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -474,7 +662,7 @@
                     processing: true,
                     bDestroy: true,
                     serverSide: true,
-                    ajax: '/ekgb/deadline',
+                    ajax: '{{ route('api-khusus-deadline') }}',
                     columns: [{
                             data: 'id',
                         },
@@ -497,12 +685,16 @@
                             data: 'status',
                         },
                         {
+                            data: 'gaji',
+                        },
+                        {
                             data: 'action',
                         },
                     ]
                 });
             });
         });
+
         $(document).ready(function() {
             $('#aktif').on('click', function() {
                 $('#tableku').html(`<table id="myTable" class="table table-striped table-bordered" width="100%" cellspacing="0">
@@ -515,6 +707,7 @@
                                     <th>Pangkat/Gol</th>
                                     <th>TMT KGB</th>
                                     <th>Status</th>
+                                    <th>Gaji</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -524,7 +717,7 @@
                     processing: true,
                     bDestroy: true,
                     serverSide: true,
-                    ajax: '/ekgb/aktif',
+                    ajax: '{{ route('api-khusus-aktif') }}',
                     columns: [{
                             data: 'id',
                         },
@@ -545,6 +738,9 @@
                         },
                         {
                             data: 'status',
+                        },
+                        {
+                            data: 'gaji',
                         },
                         {
                             data: 'action',

@@ -27,6 +27,7 @@ The above copyright notice and this permission notice shall be included in all c
   <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
   <!-- CSS Files -->
   <link href="{{ asset('material/assets/css/material-dashboard.css?v=2.1.2')}}" rel="stylesheet" />
+  <link href="{{ asset('material/assets/css/custom.css')}}" rel="stylesheet" />
 
 </head>
 
@@ -41,7 +42,8 @@ The above copyright notice and this permission notice shall be included in all c
       <div class="logo"><a href="#" class="simple-text logo-normal">
         EKGB
         </a></div>
-      <div class="sidebar-wrapper">
+        @yield('sidebar')
+      {{-- <div class="sidebar-wrapper">
         <ul class="nav">
           <li class="nav-item  ">
             <a class="nav-link" href="./dashboard.html">
@@ -56,7 +58,7 @@ The above copyright notice and this permission notice shall be included in all c
             </a>
           </li>
         </ul>
-      </div>
+      </div> --}}
     </div>
     <div class="main-panel">
       <!-- Navbar -->
@@ -149,6 +151,7 @@ The above copyright notice and this permission notice shall be included in all c
 
     @yield('modal')
     @yield('modal-hapus')
+    @yield('modal-user')
   </div>
   <!--   Core JS Files   -->
   <script src="{{ asset ('material/assets/js/core/jquery.min.js')}}"></script>

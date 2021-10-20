@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ekgb;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use \Yajra\Datatables\Datatables;
@@ -117,7 +118,7 @@ class KgbController extends Controller
      */
     public function update(Request $request, $id)
     {
-        ddd($request);
+        dd($request);
         //
         $validated = $request->validate([
             'nip' => 'required',
@@ -164,8 +165,8 @@ class KgbController extends Controller
         return Datatables::of($kgb)
             ->addColumn('action', function ($kgb) {
                 return '
-                        <a target="_blank" rel="noopener noreferrer" href="storage/gambar/' . $kgb->pendukung . '"><button class="btn btn-primary btn-sm"> <i class="material-icons">picture_as_pdf</i> </button></a>
-                        <a target="_blank" rel="noopener noreferrer" href="storage/gambar/' . $kgb->pendukung2 . '"><button class="btn btn-primary btn-sm"> <i class="material-icons">picture_as_pdf</i> </button></a>
+                        <a target="_blank" rel="noopener noreferrer" href="file/' . $kgb->pendukung . '"><button class="btn btn-primary btn-sm"> <i class="material-icons">picture_as_pdf</i> </button></a>
+                        <a target="_blank" rel="noopener noreferrer" href="file/' . $kgb->pendukung2 . '"><button class="btn btn-primary btn-sm"> <i class="material-icons">picture_as_pdf</i> </button></a>
                         <button class="edit-button-table btn btn-warning btn-sm" value=' . $kgb->id . '> <i class="material-icons">mode_edit</i> </button>
                         <button class="delete btn btn-danger btn-sm" value=' . $kgb->id . '> <i class="material-icons">delete</i> </button>
                         ';
@@ -173,8 +174,15 @@ class KgbController extends Controller
             ->make(true);
     }
 
+
+    // Custom fahmi
     public function postEkgb(Request $request)
     {
+        $check = Ekgb::where('id_user', $request->id_user)->get()->count();
+
+        if ($check > 0) {
+            return response()->json(['status' => 'Pegawai Sudah Terdaftar', 'code' => '01']);
+        }
 
         if ($request->file('pendukung') && $request->file('pendukung2')) {
             $validated['pendukung'] = $request->file('pendukung')->store('gambar');
@@ -183,35 +191,45 @@ class KgbController extends Controller
 
         $kgb = new Ekgb;
         $kgb->nip = $request->nip;
-        $kgb->nama_pegawai = $request->nama_pegawai;
+        $kgb->id_user = $request->id_user;
         $kgb->jabatan = $request->jabatan;
         $kgb->pangkat = $request->pangkat;
         $kgb->kgb_terakhir = $request->kgb_terakhir;
         $kgb->status = $request->status;
+        $kgb->gaji = $request->gaji;
         $kgb->pendukung = $request->pendukung->hashName();
         $kgb->pendukung2 = $request->pendukung2->hashName();
         $kgb->save();
 
         if (!$kgb) {
-            return response()->json(['status' => 'Gagal']);
+            return response()->json(['status' => 'Penambahan Data Gagal', 'code' => '01']);
         } else {
-            return response()->json(['status' => 'Sukses']);
+            return response()->json(['status' => 'Penambahan Data Sukses', 'code' => '02']);
         }
     }
 
     public function editEkgb(Request $request)
     {
+        $id = $request->id;
+        $id_user = $request->id_user;
+
+        $id_check = Ekgb::select('id')->where('id_user', $id_user)->first();
+
+        if ($id_check != null) {
+            if ($id_check->id != $id) {
+                return response()->json(['status' => 'User Sudah Terdaftar', 'code' => '01']);
+            }
+        }
+
         $fetch = Ekgb::select('pendukung', 'pendukung2')->where('id', $request->id)->first();
         $kgb = [
-            // 'id' => $request->id,
             'nip' => $request->nip,
-            'nama_pegawai' => $request->nama_pegawai,
+            'id_user' => $request->id_user,
             'jabatan' => $request->jabatan,
             'pangkat' => $request->pangkat,
             'kgb_terakhir' => $request->kgb_terakhir,
             'status' => $request->status,
-            // 'pendukung' => $request->pendukung,
-            // 'pendukung2' => $request->pendukung2
+            'gaji' => $request->gaji,
         ];
 
         if (isset($request->pendukung)) {
@@ -239,9 +257,9 @@ class KgbController extends Controller
         $result = Ekgb::where('id', $request->id)->update($kgb);
 
         if (!$result) {
-            return response()->json(['status' => 'Gagal']);
+            return response()->json(['status' => 'Update Data Gagal', 'code' => '01']);
         } else {
-            return response()->json(['status' => 'Sukses']);
+            return response()->json(['status' => 'Update Data Sukses', 'code' => '02']);
         }
     }
 
@@ -276,7 +294,8 @@ class KgbController extends Controller
         $date_now = $date_now->format('Y-m-d');
 
         $result = DB::table('ekgbs')
-            ->select('*')
+            ->select('ekgbs.*', 'users.name as nama_pegawai')
+            ->join('users', 'users.id', '=', 'ekgbs.id_user')
             ->whereRaw('DATEDIFF( DATE_ADD(kgb_terakhir, INTERVAL 2 YEAR), "' . $date_now . '") <= 60')
             ->get();
         // return response()->json(['data' => $result]);
@@ -284,8 +303,8 @@ class KgbController extends Controller
         return Datatables::of($result)
             ->addColumn('action', function ($kgb) {
                 return '
-                        <a target="_blank" rel="noopener noreferrer" href="storage/gambar/' . $kgb->pendukung . '"><button class="btn btn-primary btn-sm"> <i class="material-icons">picture_as_pdf</i> </button></a>
-                        <a target="_blank" rel="noopener noreferrer" href="storage/gambar/' . $kgb->pendukung2 . '"><button class="btn btn-primary btn-sm"> <i class="material-icons">picture_as_pdf</i> </button></a>
+                        <a target="_blank" rel="noopener noreferrer" href="file/' . $kgb->pendukung . '"><button class="btn btn-primary btn-sm"> <i class="material-icons">picture_as_pdf</i> </button></a>
+                        <a target="_blank" rel="noopener noreferrer" href="file/' . $kgb->pendukung2 . '"><button class="btn btn-primary btn-sm"> <i class="material-icons">picture_as_pdf</i> </button></a>
                         <button class="edit-button-table btn btn-warning btn-sm" value=' . $kgb->id . '> <i class="material-icons">mode_edit</i> </button>
                         <button class="delete btn btn-danger btn-sm" value=' . $kgb->id . '> <i class="material-icons">delete</i> </button>
                         ';
@@ -300,10 +319,20 @@ class KgbController extends Controller
         $date_now->format('Y-m-d');
 
         $result = DB::table('ekgbs')
-            ->select('*')
+            ->select('ekgbs.*', 'users.name as nama_pegawai')
+            ->join('users', 'users.id', '=', 'ekgbs.id_user')
             ->whereRaw('DATEDIFF( DATE_ADD(kgb_terakhir, INTERVAL 2 YEAR), "2021-10-12") > 60')
             ->get();
-        return response()->json(['data' => $result]);
+            return Datatables::of($result)
+            ->addColumn('action', function ($kgb) {
+                return '
+                        <a target="_blank" rel="noopener noreferrer" href="file/' . $kgb->pendukung . '"><button class="btn btn-primary btn-sm"> <i class="material-icons">picture_as_pdf</i> </button></a>
+                        <a target="_blank" rel="noopener noreferrer" href="file/' . $kgb->pendukung2 . '"><button class="btn btn-primary btn-sm"> <i class="material-icons">picture_as_pdf</i> </button></a>
+                        <button class="edit-button-table btn btn-warning btn-sm" value=' . $kgb->id . '> <i class="material-icons">mode_edit</i> </button>
+                        <button class="delete btn btn-danger btn-sm" value=' . $kgb->id . '> <i class="material-icons">delete</i> </button>
+                        ';
+            })
+            ->make(true);
     }
     // ----------------------------------------------------
     // ------------ Bagian controller api dashboard --------
@@ -321,8 +350,9 @@ class KgbController extends Controller
         $all = Ekgb::count();
         $diproses = Ekgb::where('status', 'Sudah Diproses')->count();
         $data = DB::table('ekgbs')
-            ->select('id', 'nama_pegawai', 'kgb_terakhir')
+            ->select('ekgbs.id', 'users.name as nama_pegawai', 'ekgbs.kgb_terakhir')
             ->selectRaw('DATE_ADD(kgb_terakhir, INTERVAL 2 YEAR) AS deadline')
+            ->join('users', 'users.id', '=', 'ekgbs.id_user')
             ->whereRaw('DATEDIFF( DATE_ADD(kgb_terakhir, INTERVAL 2 YEAR), "' . $date_now . '") <= 60')
             ->take(4)
             ->get();
@@ -332,5 +362,12 @@ class KgbController extends Controller
             'total'     => $all,
             'data'      => $data,
         ]);
+    }
+
+    public function sandbox()
+    {
+        $data = Ekgb::get()->user;
+        // return response()->json($data);
+        return $data->toJson();
     }
 }

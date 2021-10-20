@@ -24,21 +24,25 @@ class EkgbFactory extends Factory
     public function definition()
     {
         $array = ['Sudah Diproses', 'Belum Diproses'];
-        $pendukung = [  '0laaEt0HmaJXxtV9QRmQX41tfl847RFlWf0ZpAJC.pdf',
-                        '2QNk2Lpi6jdQGVPyFCj4JHG1Nwu1KSxKfQyfZV59.pdf',
-                        '4o1fq3MX1kNAprNKs4MDKDi9wlyEiB3jPHZZrkLl.pdf',
-                        '5J0nh6RlLWkSet2EJ83oIxu5PweVNekwcbPOYj47.pdf'
-    ];
+        $pendukung = [
+            '0laaEt0HmaJXxtV9QRmQX41tfl847RFlWf0ZpAJC.pdf',
+            '2QNk2Lpi6jdQGVPyFCj4JHG1Nwu1KSxKfQyfZV59.pdf',
+            '4o1fq3MX1kNAprNKs4MDKDi9wlyEiB3jPHZZrkLl.pdf',
+            '5J0nh6RlLWkSet2EJ83oIxu5PweVNekwcbPOYj47.pdf'
+        ];
+        $gaji = ['5000000','10000000','15000000'];
+
         return [
-            // 'nip' => Str::random(10),
             'nip' => $this->faker->numberBetween($min = 10000000, $max = 90000000),
-            'nama_pegawai' => $this->faker->name,
+            // 'nama_pegawai' => $this->faker->name,
             'jabatan' => 'staff',
             'pangkat' => 'pegawai',
             'kgb_terakhir' => $this->faker->date,
             'status' => Arr::random($array),
             'pendukung' => Arr::random($pendukung),
             'pendukung2' => Arr::random($pendukung),
+            'gaji' => Arr::random($gaji),
+            'id_user' => $this->faker->unique()->numberBetween(1, 100)
         ];
     }
 }

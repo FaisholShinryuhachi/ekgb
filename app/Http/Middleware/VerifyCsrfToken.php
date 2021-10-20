@@ -12,6 +12,10 @@ class VerifyCsrfToken extends Middleware
      * @var array
      */
     protected $except = [
-        'http://localhost:8000/ekgb/post'
+        'http://localhost:8000/ekgb/post',
+        'http://localhost:8000/api/user/post',
+        'http://localhost:8000/api/user/edit',
+        'http://localhost:8000/api/ekgb/post',
+        'http://localhost:8000/api/ekgb/edit'
     ];
 }
