@@ -7,10 +7,17 @@ use App\Models\User;
 use \Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 
 class MyUserController extends Controller
 {
+
+    public function __construct()
+	{
+	    $this->middleware('auth');
+	}
+    
     public function getUser()
     {
         $user = User::select('id', 'name', 'email', 'role')->get();
@@ -118,5 +125,13 @@ class MyUserController extends Controller
         } else {
             return response()->json(['status' => 'Sukses']);
         }
+    }
+
+    public function getProfile(){
+        $data = [
+            'nama' => Auth::user()->name,
+        ];
+
+        return response()->json(['data' => $data]);
     }
 }

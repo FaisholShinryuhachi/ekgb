@@ -43,38 +43,38 @@ use Illuminate\Support\Facades\Auth;
 //     return view('material.user.user');
 // } );
 
-Route::get('sandbox',[KgbController::class, 'sandbox']);
+Route::get('sandbox', [KgbController::class, 'sandbox']);
 
 // ---------------------------------------------------------
 // ------------------- Bagian api admin --------------------
 // ---------------------------------------------------------
 
 // Api Dashboard Admin Controller
-Route::get('api/dashboard',[KgbController::class, 'dashboardApi']);
+Route::get('api/dashboard', [KgbController::class, 'dashboardApi']);
 
 // Api Ekgb Admin Controller
-Route::get('api/ekgb/get',[KgbController::class, 'getEkgb'])->name('api-get-ekgb');
-Route::post('api/ekgb/post',[KgbController::class, 'postEkgb'])->name('api-post-ekgb');
-Route::post('api/ekgb/edit',[KgbController::class, 'editEkgb'])->name('api-edit-ekgb');
-Route::get('admin/ekgb/delete/{id}',[KgbController::class, 'deleteEkgb']);
-Route::get('admin/api/ekgb/edit-get/{id}',[KgbController::class, 'getForEdit'])->name('api-get-edit-ekgb');
+Route::get('api/ekgb/get', [KgbController::class, 'getEkgb'])->name('api-get-ekgb');
+Route::post('api/ekgb/post', [KgbController::class, 'postEkgb'])->name('api-post-ekgb');
+Route::post('api/ekgb/edit', [KgbController::class, 'editEkgb'])->name('api-edit-ekgb');
+Route::get('admin/ekgb/delete/{id}', [KgbController::class, 'deleteEkgb']);
+Route::get('admin/api/ekgb/edit-get/{id}', [KgbController::class, 'getForEdit'])->name('api-get-edit-ekgb');
 
 // Fitur Khusus Admin
-Route::get('api/ekgb/deadline',[KgbController::class, 'deadlineEkgb'])->name('api-khusus-deadline');
-Route::get('api/ekgb/aktif',[KgbController::class, 'aktifEkgb'])->name('api-khusus-aktif');
+Route::get('api/ekgb/deadline', [KgbController::class, 'deadlineEkgb'])->name('api-khusus-deadline');
+Route::get('api/ekgb/aktif', [KgbController::class, 'aktifEkgb'])->name('api-khusus-aktif');
 
 // Untuk Admin Filesystem
-Route::get('admin/file/{name}',[KgbController::class, 'getfile']);
-Route::get('file/{name}',[KgbController::class, 'getfile']);
+Route::get('admin/file/{name}', [KgbController::class, 'getfile']);
+Route::get('file/{name}', [KgbController::class, 'getfile']);
 
 
 // Api User Admin Controller
-Route::get('api/user/get',[MyUserController::class, 'getUser'])->name('api-get-user');
-Route::post('api/user/post',[MyUserController::class, 'addUser'])->name('api-post-user');
-Route::get('admin/api/user/edit-get/{id}',[MyUserController::class, 'getForEdit'])->name('api-get-edit-user');
-Route::post('api/user/edit',[MyUserController::class, 'postEdit'])->name('api-edit-user');
-Route::get('api/user/kgb/get/',[MyUserController::class, 'getUserKgb'])->name('api-get-kgb-user');
-Route::get('admin/user/delete/{id}',[MyUserController::class, 'deleteUser']);
+Route::get('admin/api/user/get', [MyUserController::class, 'getUser'])->name('api-get-user');
+Route::post('api/user/post', [MyUserController::class, 'addUser'])->name('api-post-user');
+Route::get('admin/api/user/edit-get/{id}', [MyUserController::class, 'getForEdit'])->name('api-get-edit-user');
+Route::post('api/user/edit', [MyUserController::class, 'postEdit'])->name('api-edit-user');
+Route::get('api/user/kgb/get/', [MyUserController::class, 'getUserKgb'])->name('api-get-kgb-user');
+Route::get('admin/user/delete/{id}', [MyUserController::class, 'deleteUser']);
 
 
 // ---------------------------------------------------------
@@ -85,12 +85,24 @@ Route::get('api/pegawai/get', [PegawaiController::class, 'getProfile']);
 Route::post('api/pegawai/file', [PegawaiController::class, 'filePegawai'])->name('api-file-pegawai');
 
 
-Route::get('/', function(){
+Route::get('/', function () {
     return redirect('login');
 });
 
+// ---------------------------------------------------------
+// ------------------- Bagian api profile ------------------
+// ---------------------------------------------------------
+Route::get('api/user/get', [MyUserController::class, 'getProfile'])->name('api-user-profile');
+Route::get('logout', function () {
+    Auth::logout();
+    return redirect('login');
+})->name('logout');
 
-Auth::routes();
+Auth::routes([
+    'register' => false, // Registration Routes...
+    'reset' => false, // Password Reset Routes...
+    'verify' => false, // Email Verification Routes...
+]);
 
 
 // ---------------------------------------------------------

@@ -157,7 +157,7 @@
 @push('scriptku')
     <script type="text/javascript">
         $(document).ready(function() {
-            getDataTables('{{ route('api-get-user') }}');
+            getDataTables('api/user/get');
 
             // ----------------------------------------------------------------
             // ---------------- Bagian untuk add ------------------------------
@@ -373,7 +373,7 @@
                     $('#delete-confirm').on('click', function() {
                         $.get(`user/delete/${id}`, (res) => {
                             $('#modal-hapus').modal('hide');
-                            getDataTables('{{ route('api-get-user') }}');
+                            getDataTables('api/user/get');
                         });
                     })
                 });
@@ -462,7 +462,7 @@
                         clear ? clearInput() : null;
                     }
                     // clearInput();
-                    getDataTables('{{ route('api-get-user') }}');
+                    getDataTables('api/user/get');
 
                 },
                 error: function(e) {

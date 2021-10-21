@@ -197,14 +197,10 @@
 @push('scriptku')
     <script type="text/javascript">
         $(document).ready(function() {
-
-            getData();
-
-            const getData = () => {
-                $.get(`api/pegawai/get`, (res) => {
-                    console.log(res.kgb)
-                    if (res.kgb == null) {
-                        $(".card-body").html(`<div class="row">
+            $.get(`api/pegawai/get`, (res) => {
+                console.log(res.kgb)
+                if (res.kgb == null) {
+                    $(".card-body").html(`<div class="row">
                             <div class="col-md-4 d-flex align-items-center">
                                 <label class="form-label"> Pesan </label>
                             </div>
@@ -214,20 +210,20 @@
                                 </div>
                             </div>
                         </div>`);
-                    } else {
-                        let pendukung1Html = res.kgb.pendukung == "" ? "<span>Kosong</span>" :
-                            `<a target="_blank" rel="noopener noreferrer" href="file/${res.kgb.pendukung}">Lihat</a>`
-                        let pendukung2Html = res.kgb.pendukung2 == "" ? "<span>Kosong</span>" :
-                            `<a target="_blank" rel="noopener noreferrer" href="file/${res.kgb.pendukung2}">Lihat</a>`;
+                } else {
+                    let pendukung1Html = res.kgb.pendukung == "" ? "<span>Kosong</span>" :
+                        `<a target="_blank" rel="noopener noreferrer" href="file/${res.kgb.pendukung}">Lihat</a>`
+                    let pendukung2Html = res.kgb.pendukung2 == "" ? "<span>Kosong</span>" :
+                        `<a target="_blank" rel="noopener noreferrer" href="file/${res.kgb.pendukung2}">Lihat</a>`;
 
-                        let pendukung1button = res.kgb.pendukung == "" ? `<button
+                    let pendukung1button = res.kgb.pendukung == "" ? `<button
                                         type="button" class="file-button btn btn-success"> Upload </button>` : `<button
                                         type="button" class="file-button btn btn-success"> Update </button>`;
-                        let pendukung2button = res.kgb.pendukung2 == "" ? `<button
+                    let pendukung2button = res.kgb.pendukung2 == "" ? `<button
                                         type="button" class="file-button-2 btn btn-success"> Upload </button>` : `<button
                                         type="button" class="file-button-2 btn btn-success"> Update </button>`;;
 
-                        $(".card-body").html(`
+                    $(".card-body").html(`
                         <div class="row">
                             <div class="col-md-4 d-flex align-items-center">
                                 <label class="form-label"> ID Ekgb </label>
@@ -335,46 +331,47 @@
                             </div>
                         </div>
                     `);
-                    }
+                }
 
-                    $(document).on('click', '#submit', function(e) {
-                        e.preventDefault();
-                        if (($('#pendukung').val() == '') || ($('#pendukung2').val() == '')) {
-                            $('#add-alert').empty();
+                $(document).on('click', '#submit', function(e) {
+                    e.preventDefault();
+                    if (($('#pendukung').val() == '') || ($('#pendukung2').val() == '')) {
+                        $('#add-alert').empty();
 
-                            $('#add-alert').append(`<div class="alert alert-warning mt-3" role="alert">
+                        $('#add-alert').append(`<div class="alert alert-warning mt-3" role="alert">
                                         Form Tidak Boleh Kosong
                                     </div>`);
-                            $('#submit').prop('disabled', true);
-                        } else {
-                            let form = $('#add-form')[0];
-                            let data = new FormData(form);
-                            data.append('id', res.id);
+                        $('#submit').prop('disabled', true);
+                    } else {
+                        let form = $('#add-form')[0];
+                        let data = new FormData(form);
+                        data.append('id', res.id);
 
-                            $.ajax({
-                                type: "POST",
-                                enctype: 'multipart/form-data',
-                                url: '{{ route('api-file-pegawai') }}',
-                                data: data,
-                                processData: false,
-                                contentType: false,
-                                cache: false,
-                                timeout: 800000,
-                                success: function(data) {
-                                    $('#add-alert').empty();
-                                    $('#add-alert').append(`<div class="alert alert-warning mt-3" role="alert">
+                        $.ajax({
+                            type: "POST",
+                            enctype: 'multipart/form-data',
+                            url: '{{ route('api-file-pegawai') }}',
+                            data: data,
+                            processData: false,
+                            contentType: false,
+                            cache: false,
+                            timeout: 800000,
+                            success: function(data) {
+                                $('#add-alert').empty();
+                                $('#add-alert').append(`<div class="alert alert-warning mt-3" role="alert">
                                             ${data.status}
                                         </div>`);
-                                    $('#submit').prop('disabled', true);
-                                },
-                                error: function(e) {
+                                $('#submit').prop('disabled', true);
+                                getData();
+                            },
+                            error: function(e) {
 
-                                }
-                            });
-                        }
-                    });
+                            }
+                        });
+                    }
                 });
-            }
+            });
+
         });
 
         // Show Modal
@@ -413,31 +410,144 @@
         });
 
         // submit File
-        // $(document).ready(function() {
-        //     $(document).on('click', '#submit', function(e) {
-        //         e.preventDefault();
+        const getData = () => {
+            $.get(`api/pegawai/get`, (res) => {
+                console.log(res.kgb)
+                if (res.kgb == null) {
+                    $(".card-body").html(`<div class="row">
+                            <div class="col-md-4 d-flex align-items-center">
+                                <label class="form-label"> Pesan </label>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="alert alert-info">
+                                    <span>KGB Belum Di Buat Hubungi Admin</span>
+                                </div>
+                            </div>
+                        </div>`);
+                } else {
+                    let pendukung1Html = res.kgb.pendukung == "" ? "<span>Kosong</span>" :
+                        `<a target="_blank" rel="noopener noreferrer" href="file/${res.kgb.pendukung}">Lihat</a>`
+                    let pendukung2Html = res.kgb.pendukung2 == "" ? "<span>Kosong</span>" :
+                        `<a target="_blank" rel="noopener noreferrer" href="file/${res.kgb.pendukung2}">Lihat</a>`;
 
-        //         let form = $('#add-form')[0];
-        //         let data = new FormData(form);
+                    let pendukung1button = res.kgb.pendukung == "" ? `<button
+                                        type="button" class="file-button btn btn-success"> Upload </button>` : `<button
+                                        type="button" class="file-button btn btn-success"> Update </button>`;
+                    let pendukung2button = res.kgb.pendukung2 == "" ? `<button
+                                        type="button" class="file-button-2 btn btn-success"> Upload </button>` : `<button
+                                        type="button" class="file-button-2 btn btn-success"> Update </button>`;;
 
-        //         $.ajax({
-        //             type: "POST",
-        //             enctype: 'multipart/form-data',
-        //             url: '{{ route('api-file-pegawai') }}',
-        //             data: data,
-        //             processData: false,
-        //             contentType: false,
-        //             cache: false,
-        //             timeout: 800000,
-        //             success: function(data) {
-
-        //             },
-        //             error: function(e) {
-
-        //             }
-        //         });
-        //     });
-        // });
+                    $(".card-body").html(`
+                        <div class="row">
+                            <div class="col-md-4 d-flex align-items-center">
+                                <label class="form-label"> ID Ekgb </label>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="alert alert-info">
+                                    <span>${res.id}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 d-flex align-items-center">
+                                <label class="form-label"> NIP </label>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="alert alert-info">
+                                    <span>${res.kgb.nip}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 d-flex align-items-center">
+                                <label class="form-label"> Nama Lengkap </label>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="alert alert-info">
+                                    <span>${res.kgb.nama_pegawai}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 d-flex align-items-center">
+                                <label class="form-label"> Jabatan </label>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="alert alert-info">
+                                    <span>${res.kgb.jabatan}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 d-flex align-items-center">
+                                <label class="form-label"> Pangkat </label>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="alert alert-info">
+                                    <span>${res.kgb.pangkat}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 d-flex align-items-center">
+                                <label class="form-label"> KGB Terakhir </label>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="alert alert-info">
+                                    <span>${res.kgb.kgb_terakhir}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 d-flex align-items-center">
+                                <label class="form-label"> Status </label>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="alert alert-info">
+                                    <span>${res.kgb.status}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 d-flex align-items-center">
+                                <label class="form-label"> Gaji </label>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="alert alert-info">
+                                    <span>${res.kgb.gaji}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row d-flex align-items-center">
+                            <div class="col-md-4 ">
+                                <label class="form-label"> Pendukung 1 </label>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="alert alert-info">
+                                    ${pendukung1Html}
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                ${pendukung1button}
+                            </div>
+                        </div>
+                        <div class="row d-flex align-items-center">
+                            <div class="col-md-4 ">
+                                <label class="form-label"> Pendukung 2 </label>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="alert alert-info">
+                                    ${pendukung2Html}
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                ${pendukung2button}
+                            </div>
+                        </div>
+                    `);
+                }
+            });
+        }
 
         $(document).ready(function() {
             // $('.form-control').focus(() => {
