@@ -82,6 +82,7 @@ Route::get('admin/user/delete/{id}',[MyUserController::class, 'deleteUser']);
 // ---------------------------------------------------------
 
 Route::get('api/pegawai/get', [PegawaiController::class, 'getProfile']);
+Route::post('api/pegawai/file', [PegawaiController::class, 'filePegawai'])->name('api-file-pegawai');
 
 
 Route::get('/', function(){

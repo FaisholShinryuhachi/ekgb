@@ -16,6 +16,7 @@ class VerifyCsrfToken extends Middleware
         'http://localhost:8000/api/user/post',
         'http://localhost:8000/api/user/edit',
         'http://localhost:8000/api/ekgb/post',
-        'http://localhost:8000/api/ekgb/edit'
+        'http://localhost:8000/api/ekgb/edit',
+        'http://localhost:8000/api/pegawai/file',
     ];
 }
