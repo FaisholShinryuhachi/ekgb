@@ -5,16 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Ekgb;
+use App\Models\User;
 use Illuminate\Support\Facades\File;
 
 
 class PegawaiController extends Controller
 {
     public function __construct()
-	{
-	    $this->middleware('auth');
-	}
-    
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         return view('material.user.user');
@@ -22,6 +23,7 @@ class PegawaiController extends Controller
 
     public function getProfile()
     {
+        $profile = User::select('profile')->where('id', Auth::id())->first();
         $userId = Auth::id();
         $kgb = Ekgb::where('id_user', $userId)->first();
 
@@ -29,7 +31,7 @@ class PegawaiController extends Controller
             return response()->json(['id' => 'null', 'kgb' => null]);
         } else {
 
-            return response()->json(['id' => $kgb->id, 'kgb' => $kgb]);
+            return response()->json(['id' => $kgb->id, 'kgb' => $kgb, 'profile' => $profile]);
         }
     }
 
@@ -37,10 +39,9 @@ class PegawaiController extends Controller
     {
         $fetch = Ekgb::select('pendukung', 'pendukung2')->where('id', $request->id)->first();
 
-        $file = [
-        ];
+        $file = [];
 
-        if ((is_null($request->pendukung)) && (is_null($request->pendukung2))) {
+        if ((is_null($request->pendukung)) && (is_null($request->pendukung2)) && (is_null($request->pendukung3))) {
             return response()->json(['status' => 'Tidak Ada Perubahan']);
         }
 
@@ -63,6 +64,26 @@ class PegawaiController extends Controller
             }
             if ($request->file('pendukung2')) {
                 $validated['pendukung2'] = $request->file('pendukung2')->store('gambar');
+            }
+        }
+
+        if (isset($request->pendukung3)) {
+            $profile = User::find(Auth::id());
+
+            $data = ['profile' => $request->pendukung3->hashName(),];
+
+            if (file_exists(storage_path("app\gambar\\" . $profile->profile))) {
+                File::delete(storage_path("app\gambar\\" . $profile->profile));
+            }
+
+            if ($request->file('pendukung3')) {
+                $validated['pendukung3'] = $request->file('pendukung3')->store('gambar');
+            }
+
+            $result_profile = User::where('id', Auth::id())->update($data);
+
+            if (!$result_profile) {
+                return response()->json(['status' => 'Pengubahan Foto Data Gagal']);
             }
         }
 
