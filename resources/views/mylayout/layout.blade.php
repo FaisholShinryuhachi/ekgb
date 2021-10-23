@@ -18,13 +18,15 @@ The above copyright notice and this permission notice shall be included in all c
   <link rel="icon" type="image/png" href="{{ asset('material/assets/img/favicon.png')}}">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
-    EKGB
+    E-KGB
   </title>
   <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
   <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+
+
   <!-- CSS Files -->
   <link href="{{ asset('material/assets/css/material-dashboard.css?v=2.1.2')}}" rel="stylesheet" />
   <link href="{{ asset('material/assets/css/custom.css')}}" rel="stylesheet" />
@@ -33,14 +35,14 @@ The above copyright notice and this permission notice shall be included in all c
 
 <body class="">
   <div class="wrapper ">
-    <div class="sidebar" data-color="purple" data-background-color="yellow" data-image="{{ asset('material/assets/img/sidebar-1.jpg')}}">
+    <div class="sidebar" data-color="purple" data-background-color="yellow" data-image="{{ asset('material/assets/img/sidebar-10.jpg')}}">
       <!--
         Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
 
         Tip 2: you can also add an image using data-image tag
     -->
       <div class="logo"><a href="#" class="simple-text logo-normal">
-        EKGB
+        E-KGB
         </a></div>
         @yield('sidebar')
       {{-- <div class="sidebar-wrapper">
@@ -62,13 +64,13 @@ The above copyright notice and this permission notice shall be included in all c
     </div>
     <div class="main-panel">
       <!-- Navbar -->
-      <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-primary navbar-absolute fixed-top ">
         <div class="container-fluid">
           <div class="navbar-wrapper">
-            <a class="navbar-brand" href="javascript:;">Table List</a>
+            <a class="navbar-brand" href="javascript:;">E-KGB DINAS PUPR</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="sr-only">Toggle navigation</span>
+            <span class="sr-only">TOTOTOT</span>
             <span class="navbar-toggler-icon icon-bar"></span>
             <span class="navbar-toggler-icon icon-bar"></span>
             <span class="navbar-toggler-icon icon-bar"></span>
@@ -77,14 +79,14 @@ The above copyright notice and this permission notice shall be included in all c
             <ul class="navbar-nav">
               <li class="nav-item dropdown">
                 <a class="nav-link" href="javascript:;" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <i class="material-icons">person</i>
+                  <h6>  <i class="material-icons">person</i> Hai, <strong>{{ Auth::user()->name}}&nbsp;&nbsp;</strong></h6> 
                   <p class="d-lg-none d-md-block">
-                    Account
+                    Akun
                   </p>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
-                  <a id='name-profile' class="dropdown-item" href="#"></a>
-                  <div class="dropdown-divider"></div>
+                
+                  
                   <a class="dropdown-item" href="{{ route('logout') }}">Log out</a>
                 </div>
               </li>

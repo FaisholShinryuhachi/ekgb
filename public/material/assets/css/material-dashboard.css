@@ -14042,7 +14042,7 @@ fieldset[disabled] .form-group .form-control {
 }
 
 .off-canvas-sidebar .navbar .navbar-collapse .navbar-nav .nav-item .nav-link:hover {
-  background: rgba(200, 200, 200, 0.2);
+  background: rgba(200, 200, 200, 0.5);
 }
 
 .off-canvas-sidebar .navbar.navbar-transparent {

@@ -53,20 +53,23 @@
                     </div>
                 </div>
 
+                
+                            
 
+                                                    <div class="card">
                 <div class="card-body">
                     <div class="table-responsive">
                         <div id="tableku">
                             <table id="myTable" class="table table-striped table-bordered" width="100%" cellspacing="0">
-                                <thead class="thead-dark">
+                                <thead class="thead-light">
                                     <tr>
                                         <th>ID</th>
                                         <th>NIP</th>
                                         <th>Nama</th>
                                         <th>Jabatan</th>
                                         <th>Pangkat/Gol</th>
-                                        <th>TMT KGB</th>
-                                        <th>KGB Selanjutnya</th>
+                                        <th width="100px">TMT KGB</th>
+                                        <th width="100px">KGB Selanjutnya</th>
                                         <th>Status</th>
                                         <th>Gaji</th>
                                         <th>Action</th>
@@ -249,7 +252,7 @@
                     "createdRow": function(row, data, dataIndex) {
                         if (data['stats'] === true) {
                             // $(row).css("background-color", "Orange");
-                            $(row).addClass("bg-info text-white");
+                            $(row).addClass("bg-danger text-white");
                         }
                     },
                     columns: [{
@@ -681,6 +684,7 @@
                         {
                             data: 'kgb_terakhir',
                         },
+                        
                         {
                             data: 'status',
                         },
@@ -706,6 +710,7 @@
                                     <th>Jabatan</th>
                                     <th>Pangkat/Gol</th>
                                     <th>TMT KGB</th>
+                                
                                     <th>Status</th>
                                     <th>Gaji</th>
                                     <th>Action</th>
@@ -736,6 +741,7 @@
                         {
                             data: 'kgb_terakhir',
                         },
+                    
                         {
                             data: 'status',
                         },

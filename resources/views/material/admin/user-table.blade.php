@@ -12,7 +12,7 @@
             <li class="nav-item ">
                 <a class="nav-link" href="{{ route('ekgb') }}">
                     <i class="material-icons">content_paste</i>
-                    <p>Ekgb</p>
+                    <p>E-kgb</p>
                 </a>
             </li>
             <li class="nav-item active ">

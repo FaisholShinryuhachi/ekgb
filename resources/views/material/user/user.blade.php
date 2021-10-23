@@ -137,10 +137,10 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-4 d-flex align-items-center">
-                                    <label class="form-label"> ID Ekgb </label>
+                                    <label class="form-label"> ID Ekgb :</label>
                                 </div>
                                 <div class="col-md-8">
-                                    <div class="alert alert-info">
+                                    <div class="alert alert-default">
                                         <span>${res.id}</span>
                                     </div>
                                 </div>
@@ -197,10 +197,10 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-4 d-flex align-items-center">
-                                    <label class="form-label"> Deadline </label>
+                                    <label class="form-label"> KGB yang akan datang pada </label>
                                 </div>
                                 <div class="col-md-8">
-                                    <div class="alert alert-info">
+                                    <div class="alert alert-danger">
                                         <span>${res.kgb.deadline}</span>
                                     </div>
                                 </div>
