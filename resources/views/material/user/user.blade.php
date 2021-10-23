@@ -6,7 +6,7 @@
             <li class="nav-item active ">
                 <a class="nav-link" href="#">
                     <i class="material-icons">dashboard</i>
-                    <p>Profile</p>
+                    <p>DATA KGB PEGAWAI</p>
                 </a>
             </li>
         </ul>
@@ -86,6 +86,7 @@
                                             </div>
                                             <div class="card-body">
                                                 <h4 class="card-title">${res.kgb.nama_pegawai}</h4>
+                                                <h4 class="card-title">NIP :${res.kgb.nip}</h4>
                                                 <button type="button" class="foto file-button-2 btn btn-warning btn-round"> Upload </button>
                                             </div>
                                         </div>
@@ -131,8 +132,8 @@
                     $(".col-md-8").html(`
                     <div class="card">
                         <div class="card-header card-header-primary">
-                            <h4 class="card-title">Edit Profile</h4>
-                            <p class="card-category">Complete your profile</p>
+                            <h4 class="card-title">Upload Berkas</h4>
+                           <marquee> <p class="card-category">Lengkapi Berkas Anda</p> </marquee>
                         </div>
                         <div class="card-body">
                             <div class="row">
@@ -140,7 +141,7 @@
                                     <label class="form-label"> ID Ekgb :</label>
                                 </div>
                                 <div class="col-md-8">
-                                    <div class="alert alert-default">
+                                    <div class="alert alert-info">
                                         <span>${res.id}</span>
                                     </div>
                                 </div>
@@ -157,7 +158,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-4 d-flex align-items-center">
-                                    <label class="form-label"> Nama Lengkap </label>
+                                    <label class="form-label"> Nama Pegawai </label>
                                 </div>
                                 <div class="col-md-8">
                                     <div class="alert alert-info">
@@ -177,7 +178,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-4 d-flex align-items-center">
-                                    <label class="form-label"> Pangkat </label>
+                                    <label class="form-label"> Pangkat/Golongan </label>
                                 </div>
                                 <div class="col-md-8">
                                     <div class="alert alert-info">
@@ -187,21 +188,21 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-4 d-flex align-items-center">
-                                    <label class="form-label"> KGB Terakhir </label>
+                                    <label class="form-label"> TMT KGB </label>
                                 </div>
                                 <div class="col-md-8">
                                     <div class="alert alert-info">
-                                        <span>${res.kgb.kgb_terakhir}</span>
+                                        <span>${getTanggal(res.kgb.kgb_terakhir)}</span>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-4 d-flex align-items-center">
-                                    <label class="form-label"> KGB yang akan datang pada </label>
+                                    <label class="form-label"> KGB yang akan datang</label>
                                 </div>
                                 <div class="col-md-8">
                                     <div class="alert alert-danger">
-                                        <span>${res.kgb.deadline}</span>
+                                        <span>${getTanggal(res.kgb.deadline)}</span>
                                     </div>
                                 </div>
                             </div>
@@ -217,7 +218,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-4 d-flex align-items-center">
-                                    <label class="form-label"> Gaji </label>
+                                    <label class="form-label"> Gaji Pokok </label>
                                 </div>
                                 <div class="col-md-8">
                                     <div class="alert alert-info">
@@ -227,7 +228,7 @@
                             </div>
                             <div class="row d-flex align-items-center">
                                 <div class="col-md-4 ">
-                                    <label class="form-label"> Pendukung 1 </label>
+                                    <label class="form-label"> File SK Kenaikan Pangkat Terakhir</label>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="alert alert-info">
@@ -240,7 +241,7 @@
                             </div>
                             <div class="row d-flex align-items-center">
                                 <div class="col-md-4 ">
-                                    <label class="form-label"> Pendukung 2 </label>
+                                    <label class="form-label">  File KGB Terakhir</label>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="alert alert-info">
@@ -466,7 +467,7 @@
                                 </div>
                                 <div class="col-md-8">
                                     <div class="alert alert-info">
-                                        <span>${res.kgb.kgb_terakhir}</span>
+                                        <span>${getTanggal(res.kgb.kgb_terakhir)}</span>
                                     </div>
                                 </div>
                             </div>
@@ -476,7 +477,7 @@
                                 </div>
                                 <div class="col-md-8">
                                     <div class="alert alert-info">
-                                        <span>${res.kgb.deadline}</span>
+                                        <span>${getTanggal(res.kgb.deadline)}</span>
                                     </div>
                                 </div>
                             </div>
@@ -546,6 +547,58 @@
                 }
             });
         });
+
+        const getTanggal = (data) => {
+            let tanggal = data.slice(8, 10)
+            let bulan = data.slice(5, 7)
+            let tahun = data.slice(0, 4)
+            let bulanIndo
+
+            switch (bulan) {
+                case '01':
+                    bulanIndo = 'Jan'
+                    break;
+                case '02':
+                    bulanIndo = 'Feb'
+                    break;
+                case '03':
+                    bulanIndo = 'Mar'
+                    break;
+                case '04':
+                    bulanIndo = 'Apr'
+                    break;
+                case '05':
+                    bulanIndo = 'Mei'
+                    break;
+                case '06':
+                    bulanIndo = 'Jun'
+                    break;
+                case '07':
+                    bulanIndo = 'Jul'
+                    break;
+                case '08':
+                    bulanIndo = 'Agu'
+                    break;
+                case '09':
+                    bulanIndo = 'Sep'
+                    break;
+                case '10':
+                    bulanIndo = 'Okt'
+                    break;
+                case '11':
+                    bulanIndo = 'Nov'
+                    break;
+                case '12':
+                    bulanIndo = 'Des'
+                    break;
+
+                default:
+                    break;
+            }
+
+            return `${tanggal}-${bulanIndo}-${tahun}`
+        }
+
     </script>
 @endpush
 

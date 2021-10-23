@@ -271,10 +271,16 @@
                             data: 'pangkat',
                         },
                         {
-                            data: 'kgb_terakhir',
+                            data: function(data) {
+                                return getTanggal(data.kgb_terakhir)
+                            },
+
                         },
                         {
-                            data: 'deadline',
+                            data: function(data) {
+                                return getTanggal(data.deadline)
+                            },
+
                         },
                         {
                             data: 'status',
@@ -682,7 +688,10 @@
                             data: 'pangkat',
                         },
                         {
-                            data: 'kgb_terakhir',
+                            data: function(data) {
+                                return getTanggal(data.kgb_terakhir)
+                            },
+
                         },
                         
                         {
@@ -739,7 +748,10 @@
                             data: 'pangkat',
                         },
                         {
-                            data: 'kgb_terakhir',
+                            data: function(data) {
+                                return getTanggal(data.kgb_terakhir)
+                            },
+
                         },
                     
                         {
@@ -755,6 +767,59 @@
                 });
             });
         });
+
+
+        const getTanggal = (data) => {
+            let tanggal = data.slice(8, 10)
+            let bulan = data.slice(5, 7)
+            let tahun = data.slice(0, 4)
+            let bulanIndo
+
+            switch (bulan) {
+                case '01':
+                    bulanIndo = 'Jan'
+                    break;
+                case '02':
+                    bulanIndo = 'Feb'
+                    break;
+                case '03':
+                    bulanIndo = 'Mar'
+                    break;
+                case '04':
+                    bulanIndo = 'Apr'
+                    break;
+                case '05':
+                    bulanIndo = 'Mei'
+                    break;
+                case '06':
+                    bulanIndo = 'Jun'
+                    break;
+                case '07':
+                    bulanIndo = 'Jul'
+                    break;
+                case '08':
+                    bulanIndo = 'Agu'
+                    break;
+                case '09':
+                    bulanIndo = 'Sep'
+                    break;
+                case '10':
+                    bulanIndo = 'Okt'
+                    break;
+                case '11':
+                    bulanIndo = 'Nov'
+                    break;
+                case '12':
+                    bulanIndo = 'Des'
+                    break;
+
+                default:
+                    break;
+            }
+
+            return `${tanggal}-${bulanIndo}-${tahun}`
+        }
+
     </script>
 @endpush
 
