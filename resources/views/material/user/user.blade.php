@@ -128,7 +128,7 @@
                     let pendukung2button = res.kgb.pendukung2 == "" ? `<button
                                         type="button" class="file-button-2 btn btn-success"> Upload </button>` : `<button
                                         type="button" class="file-button-2 btn btn-success"> Update </button>`;;
-
+                    let stats = res.kgb.stats == true ? `alert alert-danger` : `alert alert-success`
                     $(".col-md-8").html(`
                     <div class="card">
                         <div class="card-header card-header-primary">
@@ -201,7 +201,7 @@
                                     <label class="form-label"> KGB yang akan datang</label>
                                 </div>
                                 <div class="col-md-8">
-                                    <div class="alert alert-danger">
+                                    <div class="${stats}">
                                         <span>${getTanggal(res.kgb.deadline)}</span>
                                     </div>
                                 </div>
@@ -259,6 +259,7 @@
 
                 $(document).on('click', '#submit', function(e) {
                     e.preventDefault();
+                    $('#submit').prop('disabled', true);
                     if (($('#pendukung').val() == '') || ($('#pendukung2').val() == '') || ($(
                             '#pendukung3').val() == '')) {
                         $('#add-alert').empty();
@@ -403,7 +404,7 @@
                     let pendukung2button = res.kgb.pendukung2 == "" ? `<button
                                         type="button" class="file-button-2 btn btn-success"> Upload </button>` : `<button
                                         type="button" class="file-button-2 btn btn-success"> Update </button>`;;
-
+                    let stats = res.kgb.stats == true ? `alert alert-danger` : `alert alert-success`
                     $(".col-md-8").html(`
                     <div class="card">
                         <div class="card-header card-header-primary">
@@ -476,7 +477,7 @@
                                     <label class="form-label"> Deadline </label>
                                 </div>
                                 <div class="col-md-8">
-                                    <div class="alert alert-info">
+                                    <div class="${stats}">
                                         <span>${getTanggal(res.kgb.deadline)}</span>
                                     </div>
                                 </div>
@@ -598,7 +599,6 @@
 
             return `${tanggal}-${bulanIndo}-${tahun}`
         }
-
     </script>
 @endpush
 

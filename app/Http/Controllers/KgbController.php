@@ -15,10 +15,10 @@ use PhpParser\Node\Stmt\Return_;
 class KgbController extends Controller
 {
 
-	public function __construct()
-	{
-	    $this->middleware('auth');
-	}
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
     /**
      * Display a listing of the resource.
@@ -301,6 +301,7 @@ class KgbController extends Controller
 
         $result = DB::table('ekgbs')
             ->select('ekgbs.*', 'users.name as nama_pegawai')
+            ->selectRaw('DATE_ADD(kgb_terakhir, INTERVAL 2 YEAR) AS deadline')
             ->join('users', 'users.id', '=', 'ekgbs.id_user')
             ->whereRaw('DATEDIFF( DATE_ADD(kgb_terakhir, INTERVAL 2 YEAR), "' . $date_now . '") <= 60')
             ->get();
@@ -326,10 +327,11 @@ class KgbController extends Controller
 
         $result = DB::table('ekgbs')
             ->select('ekgbs.*', 'users.name as nama_pegawai')
+            ->selectRaw('DATE_ADD(kgb_terakhir, INTERVAL 2 YEAR) AS deadline')
             ->join('users', 'users.id', '=', 'ekgbs.id_user')
             ->whereRaw('DATEDIFF( DATE_ADD(kgb_terakhir, INTERVAL 2 YEAR), "2021-10-12") > 60')
             ->get();
-            return Datatables::of($result)
+        return Datatables::of($result)
             ->addColumn('action', function ($kgb) {
                 return '
                         <a target="_blank" rel="noopener noreferrer" href="file/' . $kgb->pendukung . '"><button class="btn btn-primary btn-sm"> <i class="material-icons">picture_as_pdf</i> </button></a>
@@ -362,11 +364,20 @@ class KgbController extends Controller
             ->whereRaw('DATEDIFF( DATE_ADD(kgb_terakhir, INTERVAL 2 YEAR), "' . $date_now . '") <= 60')
             ->take(4)
             ->get();
+
+        $data2 = DB::table('ekgbs')
+            ->select('ekgbs.id', 'users.name as nama_pegawai', 'ekgbs.kgb_terakhir')
+            ->selectRaw('DATE_ADD(kgb_terakhir, INTERVAL 2 YEAR) AS deadline')
+            ->join('users', 'users.id', '=', 'ekgbs.id_user')
+            ->where('status', '=', 'Sudah Diproses')
+            ->take(4)
+            ->get();
         return response()->json([
             'deadline'  => $result,
             'diproses'  => $diproses,
             'total'     => $all,
             'data'      => $data,
+            'data2'      => $data2,
         ]);
     }
 

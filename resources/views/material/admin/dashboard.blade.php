@@ -16,7 +16,7 @@
                 </a>
             </li>
             <li class="nav-item ">
-                <a class="nav-link" href="{{route('user-table')}}">
+                <a class="nav-link" href="{{ route('user-table') }}">
                     <i class="material-icons">switch_account</i>
                     <p>User</p>
                 </a>
@@ -59,13 +59,13 @@
                 <div class="card-footer">
                     <div class="stats">
                         <i class="material-icons text-success">update</i> proses
-                       
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    
+
     {{-- End Bagian Atas --}}
 
     {{-- Bagian Bawah --}}
@@ -74,7 +74,9 @@
             <div class="card">
                 <div class="card-header card-header-danger">
                     <h4 class="card-title">Data KGB Dalam 2 Bulan Mendatang</h4>
-                   <marquee> <p class="card-category">Segera lakukan konfirmasi ke Sub Bagian Umum dan Kepegawaian</p> </marquee>
+                    <marquee>
+                        <p class="card-category">Segera lakukan konfirmasi ke Sub Bagian Umum dan Kepegawaian</p>
+                    </marquee>
                 </div>
                 <div class="card-body table-responsive">
                     <table class="table table-hover">
@@ -94,7 +96,9 @@
             <div class="card">
                 <div class="card-header card-header-success">
                     <h4 class="card-title">Data Yang Sedang Di Proses</h4>
-                   <marquee> <p class="card-category">Mohon lakukan cek berkala</p>  </marquee>
+                    <marquee>
+                        <p class="card-category">Mohon lakukan cek berkala</p>
+                    </marquee>
                 </div>
                 <div class="card-body table-responsive">
                     <table class="table table-hover">
@@ -112,7 +116,7 @@
         </div>
     </div>
 
-       
+
     {{-- End Bagian Bawah --}}
     @push('scriptku')
         <script type="text/javascript">
@@ -134,11 +138,14 @@
 
                                         </tr>
                             `)
-                            $('#table-body2').append(`<tr>
-                                            <td>${res.data[i].id}</td>
-                                            <td>${res.data[i].nama_pegawai}</td>
-                                            <td>${getTanggal(res.data[i].kgb_terakhir)}</td>
-                                            <td>${getTanggal(res.data[i].deadline)}</td>
+                    });
+                    $.each(res.data2, (i, item) => {
+                        res.data2[i].nama_pegawai
+                        $('#table-body2').append(`<tr>
+                                            <td>${res.data2[i].id}</td>
+                                            <td>${res.data2[i].nama_pegawai}</td>
+                                            <td>${getTanggal(res.data2[i].kgb_terakhir)}</td>
+                                            <td>${getTanggal(res.data2[i].deadline)}</td>
 
                                         </tr>
                             `)
@@ -148,56 +155,55 @@
 
 
             const getTanggal = (data) => {
-            let tanggal = data.slice(8, 10)
-            let bulan = data.slice(5, 7)
-            let tahun = data.slice(0, 4)
-            let bulanIndo
+                let tanggal = data.slice(8, 10)
+                let bulan = data.slice(5, 7)
+                let tahun = data.slice(0, 4)
+                let bulanIndo
 
-            switch (bulan) {
-                case '01':
-                    bulanIndo = 'Jan'
-                    break;
-                case '02':
-                    bulanIndo = 'Feb'
-                    break;
-                case '03':
-                    bulanIndo = 'Mar'
-                    break;
-                case '04':
-                    bulanIndo = 'Apr'
-                    break;
-                case '05':
-                    bulanIndo = 'Mei'
-                    break;
-                case '06':
-                    bulanIndo = 'Jun'
-                    break;
-                case '07':
-                    bulanIndo = 'Jul'
-                    break;
-                case '08':
-                    bulanIndo = 'Agu'
-                    break;
-                case '09':
-                    bulanIndo = 'Sep'
-                    break;
-                case '10':
-                    bulanIndo = 'Okt'
-                    break;
-                case '11':
-                    bulanIndo = 'Nov'
-                    break;
-                case '12':
-                    bulanIndo = 'Des'
-                    break;
+                switch (bulan) {
+                    case '01':
+                        bulanIndo = 'Jan'
+                        break;
+                    case '02':
+                        bulanIndo = 'Feb'
+                        break;
+                    case '03':
+                        bulanIndo = 'Mar'
+                        break;
+                    case '04':
+                        bulanIndo = 'Apr'
+                        break;
+                    case '05':
+                        bulanIndo = 'Mei'
+                        break;
+                    case '06':
+                        bulanIndo = 'Jun'
+                        break;
+                    case '07':
+                        bulanIndo = 'Jul'
+                        break;
+                    case '08':
+                        bulanIndo = 'Agu'
+                        break;
+                    case '09':
+                        bulanIndo = 'Sep'
+                        break;
+                    case '10':
+                        bulanIndo = 'Okt'
+                        break;
+                    case '11':
+                        bulanIndo = 'Nov'
+                        break;
+                    case '12':
+                        bulanIndo = 'Des'
+                        break;
 
-                default:
-                    break;
+                    default:
+                        break;
+                }
+
+                return `${tanggal}-${bulanIndo}-${tahun}`
             }
-
-            return `${tanggal}-${bulanIndo}-${tahun}`
-        }
-
         </script>
     @endpush
 
