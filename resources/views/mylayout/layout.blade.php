@@ -31,6 +31,9 @@ The above copyright notice and this permission notice shall be included in all c
   <link href="{{ asset('material/assets/css/material-dashboard.css?v=2.1.2')}}" rel="stylesheet" />
   <link href="{{ asset('material/assets/css/custom.css')}}" rel="stylesheet" />
 
+  <!-- PDF FILE -->
+  
+
 </head>
 
 <body class="">

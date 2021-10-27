@@ -21,6 +21,12 @@
                     <p>User</p>
                 </a>
             </li>
+            <li class="nav-item ">
+            <a class="nav-link" href="./icons.html">
+              <i class="material-icons">bubble_chart</i>
+              <p>Icons</p>
+            </a>
+          </li>
         </ul>
     </div>
 @endsection
@@ -226,6 +232,8 @@
                             </div>
                         </div>
                     </div>
+
+                    
                     {{-- <div class="modal-footer align-center">
                     <button type="button" class="btn btn-warning tutup" data-dismiss="modal">Tutup</button>
                     {{-- <button type="button" class="btn btn-danger" id="confirm">Ya</button> --}}
@@ -250,6 +258,7 @@
                     processing: true,
                     bDestroy: true,
                     serverSide: true,
+                    
                     ajax: url,
                     "createdRow": function(row, data, dataIndex) {
                         if (data['stats'] === true) {
@@ -835,6 +844,7 @@
             return `${tanggal}-${bulanIndo}-${tahun}`
         }
     </script>
+    
 @endpush
 
 @endsection

@@ -32,9 +32,8 @@
                     <div class="row justify-content-center">
                         <div class="col-md-8">
                             <div class="mb-4">
-                                <h3>Sistem Monitoring Kenaikan Gaji Berkala E-KGB</h3>
-                                {{-- <p class="mb-4">Lorem ipsum dolor sit amet elit. Sapiente sit aut eos
-                                    consectetur adipisicing.</p> --}}
+                                <h4>Sistem Monitoring Kenaikan Gaji Berkala Dinas PUPR Kab. Natuna</h4>
+                                <p class="mb-4">Silahkan login untuk melanjutkan...</p>
                             </div>
                             <form method="POST" action="{{ route('login') }}">
                                 @csrf
