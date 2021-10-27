@@ -116,21 +116,57 @@
         </div>
     </div>
 
+@section('footer')
+    <footer class="footer">
+        <div class="container-fluid">
+            <nav class="float-left">
+                <ul>
+                    <li>
+                        <a href="{{ route('admin') }}">
+                            Dashboard
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('ekgb') }}">
+                            E-kgb
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('user-table') }}">
+                            User
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin-about') }}">
+                            About
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="copyright float-right">
+                &copy;
+                <script>
+                    document.write(new Date().getFullYear())
+                </script>, Adhitya Pratama, S.Kom & Team Version 1.0
+            </div>
+        </div>
+    </footer>
+@endsection
 
-    {{-- End Bagian Bawah --}}
-    @push('scriptku')
-        <script type="text/javascript">
-            $(document).ready(function() {
-                $.get('api/dashboard', (res) => {
-                    $('#deadline').html(`
+{{-- End Bagian Bawah --}}
+@push('scriptku')
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $.get('api/dashboard', (res) => {
+                $('#deadline').html(`
                                             <h2 class="card-title">${res.deadline}/${res.total}</h2>
                                         `);
-                    $('#proses').html(`
+                $('#proses').html(`
                                             <h2 class="card-title">${res.diproses}/${res.total}</h2>
                                         `);
-                    $.each(res.data, (i, item) => {
-                        res.data[i].nama_pegawai
-                        $('#table-body').append(`<tr>
+                $.each(res.data, (i, item) => {
+                    res.data[i].nama_pegawai
+                    $('#table-body').append(`<tr>
                                             <td>${res.data[i].id}</td>
                                             <td>${res.data[i].nama_pegawai}</td>
                                             <td>${getTanggal(res.data[i].kgb_terakhir)}</td>
@@ -138,10 +174,10 @@
 
                                         </tr>
                             `)
-                    });
-                    $.each(res.data2, (i, item) => {
-                        res.data2[i].nama_pegawai
-                        $('#table-body2').append(`<tr>
+                });
+                $.each(res.data2, (i, item) => {
+                    res.data2[i].nama_pegawai
+                    $('#table-body2').append(`<tr>
                                             <td>${res.data2[i].id}</td>
                                             <td>${res.data2[i].nama_pegawai}</td>
                                             <td>${getTanggal(res.data2[i].kgb_terakhir)}</td>
@@ -149,62 +185,62 @@
 
                                         </tr>
                             `)
-                    });
                 });
             });
+        });
 
 
-            const getTanggal = (data) => {
-                let tanggal = data.slice(8, 10)
-                let bulan = data.slice(5, 7)
-                let tahun = data.slice(0, 4)
-                let bulanIndo
+        const getTanggal = (data) => {
+            let tanggal = data.slice(8, 10)
+            let bulan = data.slice(5, 7)
+            let tahun = data.slice(0, 4)
+            let bulanIndo
 
-                switch (bulan) {
-                    case '01':
-                        bulanIndo = 'Jan'
-                        break;
-                    case '02':
-                        bulanIndo = 'Feb'
-                        break;
-                    case '03':
-                        bulanIndo = 'Mar'
-                        break;
-                    case '04':
-                        bulanIndo = 'Apr'
-                        break;
-                    case '05':
-                        bulanIndo = 'Mei'
-                        break;
-                    case '06':
-                        bulanIndo = 'Jun'
-                        break;
-                    case '07':
-                        bulanIndo = 'Jul'
-                        break;
-                    case '08':
-                        bulanIndo = 'Agu'
-                        break;
-                    case '09':
-                        bulanIndo = 'Sep'
-                        break;
-                    case '10':
-                        bulanIndo = 'Okt'
-                        break;
-                    case '11':
-                        bulanIndo = 'Nov'
-                        break;
-                    case '12':
-                        bulanIndo = 'Des'
-                        break;
+            switch (bulan) {
+                case '01':
+                    bulanIndo = 'Jan'
+                    break;
+                case '02':
+                    bulanIndo = 'Feb'
+                    break;
+                case '03':
+                    bulanIndo = 'Mar'
+                    break;
+                case '04':
+                    bulanIndo = 'Apr'
+                    break;
+                case '05':
+                    bulanIndo = 'Mei'
+                    break;
+                case '06':
+                    bulanIndo = 'Jun'
+                    break;
+                case '07':
+                    bulanIndo = 'Jul'
+                    break;
+                case '08':
+                    bulanIndo = 'Agu'
+                    break;
+                case '09':
+                    bulanIndo = 'Sep'
+                    break;
+                case '10':
+                    bulanIndo = 'Okt'
+                    break;
+                case '11':
+                    bulanIndo = 'Nov'
+                    break;
+                case '12':
+                    bulanIndo = 'Des'
+                    break;
 
-                    default:
-                        break;
-                }
-
-                return `${tanggal}-${bulanIndo}-${tahun}`
+                default:
+                    break;
             }
-        </script>
-    @endpush
+
+            return `${tanggal}-${bulanIndo}-${tahun}`
+        }
+    </script>
+@endpush
 
 @endsection

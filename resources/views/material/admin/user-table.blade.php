@@ -66,7 +66,42 @@
             </div>
         </div>
     </div>
-
+@section('footer')
+    <footer class="footer">
+        <div class="container-fluid">
+            <nav class="float-left">
+                <ul>
+                    <li>
+                        <a href="{{ route('admin') }}">
+                            Dashboard
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('ekgb') }}">
+                            E-kgb
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('user-table') }}">
+                            User
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin-about') }}">
+                            About
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="copyright float-right">
+                &copy;
+                <script>
+                    document.write(new Date().getFullYear())
+                </script>, Adhitya Pratama, S.Kom & Team
+            </div>
+        </div>
+    </footer>
+@endsection
 @section('modal')
     <!-- [ Modal Add ] start -->
     <div class="modal fade" id="add-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"

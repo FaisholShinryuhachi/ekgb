@@ -89,6 +89,7 @@ Route::get('/', function () {
     return redirect('login');
 });
 
+
 // ---------------------------------------------------------
 // ------------------- Bagian api profile ------------------
 // ---------------------------------------------------------
@@ -110,6 +111,9 @@ Auth::routes([
 // ---------------------------------------------------------
 Route::middleware(['pegawai'])->group(function () {
     Route::get('pegawai', [PegawaiController::class, 'index'])->name('pegawai');
+    Route::get('pegawai/about', function () {
+        return view('material.user.about');
+    })->name('pegawai-about');
 });
 
 // ---------------------------------------------------------
@@ -124,6 +128,9 @@ Route::middleware(['admin'])->group(function () {
         Route::get('/user-table', function () {
             return view('material.admin.user-table');
         })->name('user-table');
+        Route::get('about', function () {
+            return view('material.admin.about');
+        })->name('admin-about');
     });
 });
 
