@@ -87,6 +87,7 @@
                 </div>
             </div>
         </div>
+    </div>
     @section('footer')
     <footer class="footer">
         <div class="container-fluid">
