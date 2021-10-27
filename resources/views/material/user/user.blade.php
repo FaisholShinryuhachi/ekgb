@@ -14,7 +14,7 @@
 @endsection
 
 @section('content')
-    <div class="row">
+    <div class="row flex-column-reverse flex-lg-row">
         <div class="col-md-8">
 
         </div>
@@ -34,10 +34,31 @@
 
         {{-- End Bagian Foto --}}
     </div>
-
+@section('footer')
+    <footer class="footer">
+        <div class="container-fluid">
+            <nav class="float-left">
+                <ul>
+                    <li>
+                        <a href="{{ route('pegawai') }}">
+                            Data KGB Pegawai
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="copyright float-right">
+                &copy;
+                <script>
+                    document.write(new Date().getFullYear())
+                </script>, Adhitya Pratama, S.Kom & Team
+            </div>
+        </div>
+    </footer>
+@endsection
 @section('modal')
     <!-- [ Modal Add ] start -->
-    <div class="modal fade" id="file" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="file" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -78,15 +99,14 @@
         $(document).ready(function() {
             $.get(`api/pegawai/get`, (res) => {
                 let url = '{{ url('/') }}'
-
+                console.log(res.profile)
                 if (res.profile.profile == null) {
                     $('.col-md-4').html(`<div class="card card-profile">
                                             <div class="card-avatar">
                                                 <img class="img" src="https://ui-avatars.com/api/?name=Rani&size=128" />
                                             </div>
                                             <div class="card-body">
-                                                <h4 class="card-title">${res.kgb.nama_pegawai}</h4>
-                                                <h4 class="card-title">NIP :${res.kgb.nip}</h4>
+                                                <h4 class="card-title">${res.profile.name}</h4>
                                                 <button type="button" class="foto file-button-2 btn btn-warning btn-round"> Upload </button>
                                             </div>
                                         </div>
@@ -97,7 +117,7 @@
                                                 <img class="img" src="${url}/file/${res.profile.profile}" />
                                             </div>
                                             <div class="card-body">
-                                                <h4 class="card-title">${res.kgb.nama_pegawai}</h4>
+                                                <h4 class="card-title">${res.profile.name}</h4>
                                                 <button type="button" class="foto file-button-2 btn btn-warning btn-round"> Upload </button>
                                             </div>
                                         </div>
@@ -106,16 +126,24 @@
 
 
                 if (res.kgb == null) {
-                    $(".col-md-8").html(`<div class="row">
-                            <div class="col-md-4 d-flex align-items-center">
-                                <label class="form-label"> Pesan </label>
-                            </div>
-                            <div class="col-md-8">
-                                <div class="alert alert-info">
-                                    <span>KGB Belum Di Buat Hubungi Admin</span>
+                    $(".col-md-8").html(`<div class="card">
+                        <div class="card-header card-header-primary">
+                            <h4 class="card-title">Upload Berkas</h4>
+                           <marquee> <p class="card-category">Lengkapi Berkas Anda</p> </marquee>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4 d-flex align-items-center">
+                                    <label class="form-label"> Pesan :</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="alert alert-info">
+                                        <span>E-Kgb belum dibuat, hubungi admin</span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>`);
+                        </div>
+                    </div>`);
                 } else {
                     let pendukung1Html = res.kgb.pendukung == "" ? "<span>Kosong</span>" :
                         `<a target="_blank" rel="noopener noreferrer" href="file/${res.kgb.pendukung}">Lihat</a>`
@@ -355,14 +383,14 @@
         const getData = () => {
             $.get(`api/pegawai/get`, (res) => {
                 let url = '{{ url('/') }}'
-
+                console.log(res.profile)
                 if (res.profile.profile == null) {
                     $('.col-md-4').html(`<div class="card card-profile">
                                             <div class="card-avatar">
                                                 <img class="img" src="https://ui-avatars.com/api/?name=Rani&size=128" />
                                             </div>
                                             <div class="card-body">
-                                                <h4 class="card-title">${res.kgb.nama_pegawai}</h4>
+                                                <h4 class="card-title">${res.profile.name}</h4>
                                                 <button type="button" class="foto file-button-2 btn btn-warning btn-round"> Upload </button>
                                             </div>
                                         </div>
@@ -373,7 +401,7 @@
                                                 <img class="img" src="${url}/file/${res.profile.profile}" />
                                             </div>
                                             <div class="card-body">
-                                                <h4 class="card-title">${res.kgb.nama_pegawai}</h4>
+                                                <h4 class="card-title">${res.profile.name}</h4>
                                                 <button type="button" class="foto file-button-2 btn btn-warning btn-round"> Upload </button>
                                             </div>
                                         </div>
@@ -382,16 +410,24 @@
 
 
                 if (res.kgb == null) {
-                    $(".col-md-8").html(`<div class="row">
-                            <div class="col-md-4 d-flex align-items-center">
-                                <label class="form-label"> Pesan </label>
-                            </div>
-                            <div class="col-md-8">
-                                <div class="alert alert-info">
-                                    <span>KGB Belum Di Buat Hubungi Admin</span>
+                    $(".col-md-8").html(`<div class="card">
+                        <div class="card-header card-header-primary">
+                            <h4 class="card-title">Upload Berkas</h4>
+                           <marquee> <p class="card-category">Lengkapi Berkas Anda</p> </marquee>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4 d-flex align-items-center">
+                                    <label class="form-label"> Pesan :</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="alert alert-info">
+                                        <span>E-Kgb belum dibuat, hubungi admin</span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>`);
+                        </div>
+                    </div>`);
                 } else {
                     let pendukung1Html = res.kgb.pendukung == "" ? "<span>Kosong</span>" :
                         `<a target="_blank" rel="noopener noreferrer" href="file/${res.kgb.pendukung}">Lihat</a>`
@@ -408,13 +444,13 @@
                     $(".col-md-8").html(`
                     <div class="card">
                         <div class="card-header card-header-primary">
-                            <h4 class="card-title">Edit Profile</h4>
-                            <p class="card-category">Complete your profile</p>
+                            <h4 class="card-title">Upload Berkas</h4>
+                           <marquee> <p class="card-category">Lengkapi Berkas Anda</p> </marquee>
                         </div>
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-4 d-flex align-items-center">
-                                    <label class="form-label"> ID Ekgb </label>
+                                    <label class="form-label"> ID Ekgb :</label>
                                 </div>
                                 <div class="col-md-8">
                                     <div class="alert alert-info">
@@ -434,7 +470,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-4 d-flex align-items-center">
-                                    <label class="form-label"> Nama Lengkap </label>
+                                    <label class="form-label"> Nama Pegawai </label>
                                 </div>
                                 <div class="col-md-8">
                                     <div class="alert alert-info">
@@ -454,7 +490,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-4 d-flex align-items-center">
-                                    <label class="form-label"> Pangkat </label>
+                                    <label class="form-label"> Pangkat/Golongan </label>
                                 </div>
                                 <div class="col-md-8">
                                     <div class="alert alert-info">
@@ -464,7 +500,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-4 d-flex align-items-center">
-                                    <label class="form-label"> KGB Terakhir </label>
+                                    <label class="form-label"> TMT KGB </label>
                                 </div>
                                 <div class="col-md-8">
                                     <div class="alert alert-info">
@@ -474,7 +510,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-4 d-flex align-items-center">
-                                    <label class="form-label"> Deadline </label>
+                                    <label class="form-label"> KGB yang akan datang</label>
                                 </div>
                                 <div class="col-md-8">
                                     <div class="${stats}">
@@ -494,7 +530,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-4 d-flex align-items-center">
-                                    <label class="form-label"> Gaji </label>
+                                    <label class="form-label"> Gaji Pokok </label>
                                 </div>
                                 <div class="col-md-8">
                                     <div class="alert alert-info">
@@ -504,7 +540,7 @@
                             </div>
                             <div class="row d-flex align-items-center">
                                 <div class="col-md-4 ">
-                                    <label class="form-label"> Pendukung 1 </label>
+                                    <label class="form-label"> File SK Kenaikan Pangkat Terakhir</label>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="alert alert-info">
@@ -517,7 +553,7 @@
                             </div>
                             <div class="row d-flex align-items-center">
                                 <div class="col-md-4 ">
-                                    <label class="form-label"> Pendukung 2 </label>
+                                    <label class="form-label">  File KGB Terakhir</label>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="alert alert-info">

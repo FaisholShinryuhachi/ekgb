@@ -23,12 +23,16 @@ class PegawaiController extends Controller
 
     public function getProfile()
     {
-        $profile = User::select('profile')->where('id', Auth::id())->first();
+        $profile = User::select('profile','name')->where('id', Auth::id())->first();
+        if ($profile->profile == null){
+            $profile = ['name' => $profile->name, 'profile' => null];
+        }
+        
         $userId = Auth::id();
         $kgb = Ekgb::where('id_user', $userId)->first();
 
         if ($kgb == null) {
-            return response()->json(['id' => 'null', 'kgb' => null]);
+            return response()->json(['id' => 'null', 'kgb' => null, 'profile' => $profile]);
         } else {
 
             return response()->json(['id' => $kgb->id, 'kgb' => $kgb, 'profile' => $profile]);
@@ -86,11 +90,13 @@ class PegawaiController extends Controller
                 return response()->json(['status' => 'Pengubahan Foto Data Gagal']);
             }
         }
-
+        if($file == null){
+            return response()->json(['status' => 'Pengubahan Foto Data Berhasil']);
+        }
         $result = Ekgb::where('id', $request->id)->update($file);
 
         if (!$result) {
-            return response()->json(['status' => 'Pengubahan Data Gagal']);
+            return response()->json(['status' => 'Pengubahan Tes Data Gagal']);
         } else {
             return response()->json(['status' => 'Pengubahan Data Sukses']);
         }

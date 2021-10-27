@@ -41,8 +41,7 @@
                             <button id="add-button" class="edit btn btn-primary btn-sm"> <i
                                     class="material-icons">add_circle</i>
                             </button>
-                            <button id="semua" class="edit btn btn-success btn-sm"> <i
-                                    class="material-icons">toc</i>
+                            <button id="semua" class="edit btn btn-success btn-sm"> <i class="material-icons">toc</i>
                                 Semua </button>
                             <button id="deadline" class="edit btn btn-success btn-sm"> <i
                                     class="material-icons">disabled_by_default</i> Dealine </button>
@@ -82,7 +81,42 @@
                 </div>
             </div>
         </div>
-
+    @section('footer')
+        <footer class="footer">
+            <div class="container-fluid">
+                <nav class="float-left">
+                    <ul>
+                        <li>
+                            <a href="{{ route('admin') }}">
+                                Dashboard
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('ekgb') }}">
+                                E-kgb
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('user-table') }}">
+                                User
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin-about') }}">
+                                About
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <div class="copyright float-right">
+                    &copy;
+                    <script>
+                        document.write(new Date().getFullYear())
+                    </script>, Adhitya Pratama, S.Kom & Team
+                </div>
+            </div>
+        </footer>
+    @endsection
     @section('modal')
         <!-- [ Modal Add ] start -->
         <div class="modal fade" id="add-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
