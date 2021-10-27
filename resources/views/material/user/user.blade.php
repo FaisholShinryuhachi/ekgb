@@ -386,7 +386,7 @@
                 console.log(res.profile)
                 if (res.profile.profile == null) {
                     $('.col-md-4').html(`<div class="card card-profile">
-                                            <div class="card_image"><img src="https://picsum.photos/500/300/?image=10" width="100%"></div>
+                                            <div class="card_image"><img src="{{ asset('material/assets/img/natuna.jpg') }}" width="100%"></div>
                 
                                             <div class="card-avatar">
                                                 <img class="img" src="https://ui-avatars.com/api/?name=Rani&size=128" />
@@ -399,7 +399,7 @@
                                         `)
                 } else {
                     $('.col-md-4').html(`<div class="card card-profile">
-                                         <div class="card_image"><img src="https://picsum.photos/500/300/?image=10" width="100%"></div>
+                                             <div class="card_image"><img src="{{ asset('material/assets/img/natuna.jpg') }}" width="100%"></div>
                 
                                             <div class="card-avatar">
                                                 <img class="img" src="${url}/file/${res.profile.profile}" />

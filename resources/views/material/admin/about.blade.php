@@ -32,7 +32,7 @@
     <div class="row d-flex justify-content-center">
         <div class="col-lg-6">
             <div class="card card-profile">
-                <div class="card_image"><img src="https://picsum.photos/500/300/?image=10" width="100%"></div>
+                <div class="card_image"><img src="https://picsum.photos/500/300/?image=0" width="100%"></div>
                 
                 <div class="card-avatar">
                     <a href="javascript:;">
