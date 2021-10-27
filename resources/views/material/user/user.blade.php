@@ -4,7 +4,7 @@
     <div class="sidebar-wrapper">
         <ul class="nav">
             <li class="nav-item active ">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{ route('pegawai') }}">
                     <i class="material-icons">dashboard</i>
                     <p>DATA KGB PEGAWAI</p>
                 </a>
@@ -42,6 +42,11 @@
                     <li>
                         <a href="{{ route('pegawai') }}">
                             Data KGB Pegawai
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('pegawai-about') }}">
+                            About
                         </a>
                     </li>
                 </ul>
@@ -102,8 +107,9 @@
                 console.log(res.profile)
                 if (res.profile.profile == null) {
                     $('.col-md-4').html(`<div class="card card-profile">
+                                            <div class="card_image"><img src="https://picsum.photos/500/300/?image=10" width="100%"></div>
                                             <div class="card-avatar">
-                                                <img class="img" src="https://ui-avatars.com/api/?name=Rani&size=128" />
+                                                <img class="img" src="https://ui-avatars.com/api/?name=${res.profile.name}&size=128" />
                                             </div>
                                             <div class="card-body">
                                                 <h4 class="card-title">${res.profile.name}</h4>
@@ -113,6 +119,7 @@
                                         `)
                 } else {
                     $('.col-md-4').html(`<div class="card card-profile">
+                                            <div class="card_image"><img src="https://picsum.photos/500/300/?image=10" width="100%"></div>
                                             <div class="card-avatar">
                                                 <img class="img" src="${url}/file/${res.profile.profile}" />
                                             </div>
@@ -383,13 +390,13 @@
         const getData = () => {
             $.get(`api/pegawai/get`, (res) => {
                 let url = '{{ url('/') }}'
-                console.log(res.profile)
+               
                 if (res.profile.profile == null) {
                     $('.col-md-4').html(`<div class="card card-profile">
                                             <div class="card_image"><img src="https://picsum.photos/500/300/?image=10" width="100%"></div>
                 
                                             <div class="card-avatar">
-                                                <img class="img" src="https://ui-avatars.com/api/?name=Rani&size=128" />
+                                                <img class="img" src="https://ui-avatars.com/api/?name=${res.profile.name}&size=128" />
                                             </div>
                                             <div class="card-body">
                                                 <h4 class="card-title">${res.profile.name}</h4>
