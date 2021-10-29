@@ -40,9 +40,11 @@
                     </a>
                 </div>
                 <div class="card-body">
-                    <h6 class="card-title">Developer By : </h6>
-                    <h6 class="card-category text-gray">Pranata Komputer Ahli Pertama</h6>
+                    <h6 class="card-title">Sistem Monitoring Kenaikan Gaji Berkala E-KGB - Version 1.0 (28 Oktober 2021)</h6>
+                    <h6 class="card-title"></h6>
+                    <h6 class="card-title">Developer :</h6>
                     <h4 class="card-title">Adhitya Pratama, S.Kom</h4>
+                    <h6 class="card-category text-gray">Pranata Komputer Ahli Pertama</h6>
                     <h4 class="card-title">NIP. 19940715 202012 1 009</h4>
                     <p class="card-description">
                         Instansi : Dinas Pekerjaan Umum dan Penataan Ruang Kabupaten Natuna

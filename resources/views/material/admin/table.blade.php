@@ -22,9 +22,9 @@
                 </a>
             </li>
             <li class="nav-item ">
-            <a class="nav-link" href="./icons.html">
+            <a class="nav-link" href="{{ route('admin-about') }}">
               <i class="material-icons">bubble_chart</i>
-              <p>Icons</p>
+              <p>About</p>
             </a>
           </li>
         </ul>
@@ -76,7 +76,7 @@
                                             <th width="100px">TMT KGB</th>
                                             <th width="100px">KGB Selanjutnya</th>
                                             <th>Status</th>
-                                            <th>Gaji</th>
+                                            <th>Gaji Pokok</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -87,6 +87,7 @@
                 </div>
             </div>
         </div>
+    </div>
     @section('footer')
     <footer class="footer">
         <div class="container-fluid">
@@ -180,18 +181,18 @@
                                 </select>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label"> Gaji </label>
+                                <label class="form-label"> Gaji Pokok</label>
                                 <input id="gaji" type="number" class="form-control" name="gaji">
                             </div>
                             <div class="mb-3">
                                 <div id="pdf-preview">
                                 </div>
                                 <div id="file-uploader">
-                                    <label class="form-label">Pendukung</label>
+                                    <label class="form-label">SK Pangkat Terkahir</label>
                                     <div class="col-xs-8">
                                         <input id="pendukung" class="form-control" type="file" name="pendukung">
                                     </div>
-                                    <label class="form-label">Pendukung 2</label>
+                                    <label class="form-label">KGB Terakhir</label>
                                     <div class="col-xs-8">
                                         <input id="pendukung2" class="form-control" type="file" name="pendukung2">
                                     </div>

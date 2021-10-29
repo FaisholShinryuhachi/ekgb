@@ -3,22 +3,10 @@
 @section('sidebar')
     <div class="sidebar-wrapper">
         <ul class="nav">
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('admin') }}">
+            <li class="nav-item ">
+                <a class="nav-link" href="{{route('pegawai')}}">
                     <i class="material-icons">dashboard</i>
-                    <p>Dashboard</p>
-                </a>
-            </li>
-            <li class="nav-item ">
-                <a class="nav-link" href="{{ route('ekgb') }}">
-                    <i class="material-icons">content_paste</i>
-                    <p>E-kgb</p>
-                </a>
-            </li>
-            <li class="nav-item ">
-                <a class="nav-link" href="{{ route('user-table') }}">
-                    <i class="material-icons">switch_account</i>
-                    <p>User</p>
+                    <p>DATA KGB PEGAWAI</p>
                 </a>
             </li>
         </ul>
@@ -28,15 +16,19 @@
 @section('content')
     {{-- Bagin Atas --}}
     <div class="row d-flex justify-content-center">
-        <div class="col-lg-8">
+        <div class="col-lg-6">
             <div class="card card-profile">
+                <div class="card_image"><img src="https://picsum.photos/500/300/?image=10" width="100%"></div>
+
                 <div class="card-avatar">
                     <a href="javascript:;">
                         <img class="img" src="{{ asset('material/assets/img/profile.jpeg') }}" />
                     </a>
                 </div>
                 <div class="card-body">
-                    <h6 class="card-title">Developer By : </h6>
+                    <h6 class="card-title">Sistem Monitoring Kenaikan Gaji Berkala E-KGB - Version 1.0 (28 Oktober 2021)</h6>
+                    <h6 class="card-title"></h6>
+                    <h6 class="card-title">Developer :</h6>
                     <h6 class="card-category text-gray">Pranata Komputer Ahli Pertama</h6>
                     <h4 class="card-title">Adhitya Pratama, S.Kom</h4>
                     <h4 class="card-title">NIP. 19940715 202012 1 009</h4>
