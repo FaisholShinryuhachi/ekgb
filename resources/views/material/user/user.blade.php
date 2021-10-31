@@ -55,7 +55,7 @@
                             About
                         </a>
                     </li>
-                    
+
                 </ul>
             </nav>
             <div class="copyright float-right">
@@ -102,7 +102,22 @@
 
 @section('modal-hapus')
     <!-- [ Modal Delete ] start -->
-
+    <div class="modal fade" id="alert" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                </div>
+                <div class="modal-body pl-5 pr-5">
+                    Peringatan
+                </div>
+                <div class="modal-footer align-center">
+                    <button type="button" class="btn btn-warning" data-dismiss="modal">Tutup</button>
+                    {{-- <button type="button" class="btn btn-danger" id="confirm">Ya</button> --}}
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- [ Modal Delete ] end -->
 @endsection
 
@@ -110,6 +125,11 @@
     <script type="text/javascript">
         $(document).ready(function() {
             $.get(`api/pegawai/get`, (res) => {
+
+                if( res.stats == true && res.stats != null ) {
+                    $('#alert').modal('show');
+                } 
+
                 let url = '{{ url('/') }}'
                 console.log(res.profile)
                 if (res.profile.profile == null) {
@@ -397,7 +417,7 @@
         const getData = () => {
             $.get(`api/pegawai/get`, (res) => {
                 let url = '{{ url('/') }}'
-               
+
                 if (res.profile.profile == null) {
                     $('.col-md-4').html(`<div class="card card-profile">
                                             <div class="card_image"><img src="{{ asset('material/assets/img/natuna.jpg') }}" width="100%"></div>

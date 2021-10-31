@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Ekgb;
 use App\Models\User;
 use Illuminate\Support\Facades\File;
+use Carbon\Carbon;
+
 
 
 class PegawaiController extends Controller
@@ -23,19 +25,34 @@ class PegawaiController extends Controller
 
     public function getProfile()
     {
-        $profile = User::select('profile','name')->where('id', Auth::id())->first();
-        if ($profile->profile == null){
+        $profile = User::select('profile', 'name')->where('id', Auth::id())->first();
+        if ($profile->profile == null) {
             $profile = ['name' => $profile->name, 'profile' => null];
         }
-        
+
         $userId = Auth::id();
         $kgb = Ekgb::where('id_user', $userId)->first();
 
-        if ($kgb == null) {
-            return response()->json(['id' => 'null', 'kgb' => null, 'profile' => $profile]);
-        } else {
 
-            return response()->json(['id' => $kgb->id, 'kgb' => $kgb, 'profile' => $profile]);
+        if ($kgb == null) {
+            return response()->json(['id' => 'null', 'kgb' => null, 'profile' => $profile, 'stats' => null]);
+        } else {
+            $date_deadline = new \DateTime($kgb->kgb_terakhir);
+            $date_deadline->add(new \DateInterval('P2Y'));
+            $date_deadline->format('Y-m-d');
+
+            $date_now = Carbon::now();
+            $date_now->format('Y-m-d');
+
+
+            $diff = date_diff($date_deadline, $date_now, 'DAY')->format("%r%a");
+            if ($diff <= 60 || $date_now >= $date_deadline) {
+                $stats =  true;
+            } else {
+                $stats =  false;
+            }
+
+            return response()->json(['id' => $kgb->id, 'kgb' => $kgb, 'profile' => $profile, 'stats' => $stats]);
         }
     }
 
@@ -90,7 +107,7 @@ class PegawaiController extends Controller
                 return response()->json(['status' => 'Pengubahan Foto Data Gagal']);
             }
         }
-        if($file == null){
+        if ($file == null) {
             return response()->json(['status' => 'Pengubahan Foto Data Berhasil']);
         }
         $result = Ekgb::where('id', $request->id)->update($file);
