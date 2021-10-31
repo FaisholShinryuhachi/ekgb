@@ -9,6 +9,12 @@
                     <p>DATA KGB PEGAWAI</p>
                 </a>
             </li>
+            <li class="nav-item ">
+                <a class="nav-link" href="{{ route('logout') }}">
+                    <i class="material-icons">logout</i>
+                    <p>Logout</p>
+                </a>
+            </li>
         </ul>
     </div>
 @endsection
@@ -49,6 +55,7 @@
                             About
                         </a>
                     </li>
+                    
                 </ul>
             </nav>
             <div class="copyright float-right">

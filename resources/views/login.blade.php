@@ -44,11 +44,11 @@
                             {{ Session::get('error') }}
                         </div>
                     @endif
-                    <div class="form-group">
+                    <div class="form-floating">
                         <label for=""><strong>Email</strong></label>
                         <input type="text" name="email" class="form-control" placeholder="Email">
                     </div>
-                    <div class="form-group">
+                    <div class="form-floating">
                         <label for=""><strong>Password</strong></label>
                         <input type="password" name="password" class="form-control" placeholder="Password">
                     </div>
@@ -61,5 +61,10 @@
             </div>
         </div>
     </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/8.11.8/sweetalert2.all.min.js"></script>
+<script>
+
+</script>
 </body>
 </html>

@@ -21,11 +21,43 @@
                     <p>User</p>
                 </a>
             </li>
+            <li class="nav-item ">
+                <a class="nav-link" href="{{ route('logout') }}">
+                    <i class="material-icons">logout</i>
+                    <p>Logout</p>
+                </a>
+            </li>
+
         </ul>
     </div>
 @endsection
 
 @section('content')
+
+<div class="row d-flex justify-content-center">
+    <div class="col-lg-12">
+        <div class="card card-profile">
+            <div class="card_image"><img src="{{ asset('material/assets/img/dash.png') }}" width="100%"></div>
+            
+            
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header card-header-warning">
+                <h4 class="card-title">Warning !</h4>
+                <marquee>
+                    <p class="card-category">Sistem Ini Dibuat Untuk Memudahkan Dalam Proses Monitoring KGB Pada Dinas PUPR Kab. Natuna</p>
+                </marquee>
+            </div>
+            <div class="card-body table-responsive">
+               
+            </div>
+        </div>
+    </div>
+</div>
     {{-- Bagin Atas --}}
     <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-6">
@@ -141,7 +173,13 @@
                             About
                         </a>
                     </li>
+                    <li>
+                    <a class="dropdown-item" href="{{ route('logout') }}">Log out</a>
+                    </li>
                 </ul>
+
+
+                
             </nav>
             <div class="copyright float-right">
                 &copy;
