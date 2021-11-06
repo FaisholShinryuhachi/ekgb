@@ -161,9 +161,32 @@
                                     <button id="show-user" type="button" class="btn btn-danger">Pilih</button>
                                 </div>
                             </div>
-                            <div class="mb-3">
+                            {{-- <div class="mb-3">
                                 <label class="form-label"> Jabatan </label>
                                 <input id="jabatan" type="text" class="form-control" name="jabatan">
+                            </div> --}}
+                            <div class="mb-3">
+                                <label class="form-label"> Jabatan` </label>
+                                <select id="jabatan" name="jabatan" class="form-control">
+                                    <option value="Juru Muda">Juru Muda</option>
+                                    <option value="Juru Muda Tingkat I">Juru Muda Tingkat I</option>
+                                    <option value="Juru">Juru</option>
+                                    <option value="Juru Tingkat I">Juru Tingkat I</option>
+                                    <option value="Pengatur Muda">Pengatur Muda</option>
+                                    <option value="Pengatur Muda Tingkat I">Pengatur Muda Tingkat I</option>
+                                    <option value="Pengatur">Pengatur</option>
+                                    <option value="Pengatur Tingkat I">Pengatur Tingkat I</option>
+                                    <option value="Penata">Penata</option>    
+                                    <option value="Penata Muda">Penata Muda</option>    
+                                    <option value="Penata Muda Tingkat I">Penata Muda Tingkat I</option>    
+                                    <option value="Penata">Penata</option>    
+                                    <option value="Penata Tingkat I">Penata Tingkat I</option>    
+                                    <option value="Pembina">Pembina</option>    
+                                    <option value="Pembina Tingkat I">Pembina Tingkat I</option>    
+                                    <option value="Pembina Utama Muda">Pembina Utama Muda</option>    
+                                    <option value="Pembina Utama Madya">Pembina Utama Madya</option>    
+                                    <option value="Pembina Utama">Pembina Utama</option>    
+                                </select>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label"> Pangkat/Golongan </label>
