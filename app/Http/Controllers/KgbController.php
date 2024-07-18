@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Ekgb;
 use App\Models\User;
+use App\Models\Pengajuan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use \Yajra\Datatables\Datatables;
@@ -11,6 +12,9 @@ use Illuminate\Support\Facades\File;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use PhpParser\Node\Stmt\Return_;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
+
 
 class KgbController extends Controller
 {
@@ -181,7 +185,7 @@ class KgbController extends Controller
     }
 
 
-    // Custom fahmi
+ 
     public function postEkgb(Request $request)
     {
         $check = Ekgb::where('id_user', $request->id_user)->get()->count();
@@ -285,7 +289,69 @@ class KgbController extends Controller
             return response()->json(['status' => 'Sukses']);
         }
     }
+//-------------- delete pengajuan ---------------------
 
+public function destroyPengajuan($id)
+{
+    Log::info('Menerima permintaan untuk menghapus pengajuan dengan ID: ' . $id);
+
+    $pengajuan = Pengajuan::find($id);
+
+    if ($pengajuan) {
+        Log::info('Pengajuan ditemukan: ' . json_encode($pengajuan));
+        $pengajuan->delete();
+        Log::info('Pengajuan berhasil dihapus.');
+        return redirect()->route('admin.pengajuan.tampilPengajuanKGB')->with('success', 'Pengajuan berhasil dihapus.');
+    } else {
+        Log::warning('Pengajuan tidak ditemukan.');
+        return redirect()->route('admin.pengajuan.tampilPengajuanKGB')->with('error', 'Pengajuan tidak ditemukan.');
+    }
+}
+//___edit Pengajuan
+
+
+// Fungsi untuk mengupdate data pengajuan
+public function editPengajuan($id_pengajuan)
+    {
+        $pengajuan = Pengajuan::findOrFail($id_pengajuan);
+    $users = User::all();
+
+    return response()->json([
+        'pengajuan' => $pengajuan,
+        'users' => $users
+    ]);
+    }
+
+    public function updatePengajuan(Request $request, $id_pengajuan)
+    {
+        $validator = Validator::make($request->all(), [
+            'nomor_surat' => 'required|string|max:255',
+            'tanggal_surat' => 'required|date',
+            'penanda_tangan' => 'required|string|max:255',
+            'daftar_pegawai' => 'required|array',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        try {
+            $pengajuan = Pengajuan::findOrFail($id_pengajuan);
+            $pengajuan->nomor_surat = $request->nomor_surat;
+            $pengajuan->tanggal_surat = Carbon::parse($request->tanggal_surat);
+            $pengajuan->penanda_tangan = $request->penanda_tangan;
+            $pengajuan->daftar_pegawai = json_encode($request->daftar_pegawai);
+            $pengajuan->save();
+
+            return redirect()->route('pengajuan.index')->with('success', 'Pengajuan berhasil diperbarui.');
+        } catch (\Exception $e) {
+            Log::error('Error updating pengajuan:', ['message' => $e->getMessage()]);
+            return redirect()->back()->with('error', 'Pengajuan gagal diperbarui.');
+        }
+    }
+//----------------------------------------------------------
     public function getFile($name)
     {
 
@@ -342,6 +408,77 @@ class KgbController extends Controller
             })
             ->make(true);
     }
+    
+    
+    
+//------------------------------------------
+//--------Bagian Tampil Pengajuan-----------
+//------------------------------------------
+
+public function tampilPengajuan()
+    {
+        // Mengambil semua data pengajuan beserta relasi user (pegawai)
+        $pengajuan = Pengajuan::with('users')->get();
+
+        // Mengembalikan view dengan data pengajuan
+        return view('material.admin.tampilPengajuanKGB', compact('pengajuan'));
+    }
+
+    //------------------------------------------------------
+    //----------Bagian Add Pengajuan------------------------
+    //------------------------------------------------------
+    // Fungsi untuk menyimpan data pengajuan baru
+    public function postPengajuan(Request $request)
+    {
+        try {
+            // memvalidasi input data
+            $validator = Validator::make($request->all(), [
+                'nomor_surat' => 'required|string|max:255',
+                'tanggal_surat' => 'required|date',
+                'penanda_tangan' => 'required|string|max:255',
+                'daftar_pegawai' => 'required|array',
+               
+            ]);
+            // cek jika validasi gagal
+            if ($validator->fails()) {
+                Log::error('Validation failed:', $validator->errors()->toArray());
+                return response()->json(['message' => 'Validation failed', 'errors' => $validator->errors()], 422);
+            }
+            // field sesuai dengan database
+            $pengajuan = new Pengajuan();
+            $pengajuan->nomor_surat = $request->nomor_surat;
+            $pengajuan->tanggal_surat = Carbon::parse($request->tanggal_surat);
+            $pengajuan->penanda_tangan = $request->penanda_tangan;
+            $pengajuan->daftar_pegawai = json_encode($request->daftar_pegawai);
+
+            // data disimpan
+            $pengajuan->save();
+
+            // kembalikan respon ketika berhasil
+            return response()->json(['message' => 'Pengajuan berhasil disimpan.']);
+        } catch (\Exception $e) {
+            // log
+            Log::error('Error saving pengajuan:', ['message' => $e->getMessage()]);
+            return response()->json(['message' => 'Pengajuan gagal disimpan.', 'error' => $e->getMessage()], 500);
+        }
+    }
+    
+    //-----------------------------------------------------------//
+    //----------------------Bagian Surat Pengantar----------------//
+    //-------------------------------------------------------------//
+    
+    
+    public function suratPengantar($id)
+    {
+        // Ambil data pengajuan berdasarkan $id
+        $pengajuan = Pengajuan::findOrFail($id);
+    
+        // Render view surat pengantar dengan data pengajuan
+        return view('material.admin.surat_pengantar', compact('pengajuan'));
+    }
+    
+
+
     // ----------------------------------------------------
     // ------------ Bagian controller api dashboard --------
     // ----------------------------------------------------

@@ -3,30 +3,36 @@
 @section('sidebar')
     <div class="sidebar-wrapper">
         <ul class="nav">
-            <li class="nav-item  ">
+            <li class="nav-item">
                 <a class="nav-link" href="{{ route('admin') }}">
                     <i class="material-icons">dashboard</i>
                     <p>Dashboard</p>
                 </a>
             </li>
-            <li class="nav-item active ">
+            <li class="nav-item active">
                 <a class="nav-link" href="{{ route('ekgb') }}">
                     <i class="material-icons">content_paste</i>
                     <p>Ekgb</p>
                 </a>
             </li>
-            <li class="nav-item ">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin.pengajuan.tampilPengajuanKGB') }}">
+                    <i class="material-icons">send</i>
+                    <p>Pengajuan</p>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="{{ route('user-table') }}">
                     <i class="material-icons">switch_account</i>
                     <p>User</p>
                 </a>
             </li>
-            <li class="nav-item ">
-            <a class="nav-link" href="{{ route('admin-about') }}">
-              <i class="material-icons">bubble_chart</i>
-              <p>About</p>
-            </a>
-          </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin-about') }}">
+                    <i class="material-icons">bubble_chart</i>
+                    <p>About</p>
+                </a>
+            </li>
         </ul>
     </div>
 @endsection
@@ -54,6 +60,11 @@
                             <button id="aktif" class="edit btn btn-success btn-sm"> <i
                                     class="material-icons">check_circle</i>
                                 Aktif </button>
+                                  <!-- Tombol Ajukan -->
+                             <button id="ajukan" class="edit btn btn-primary btn-sm">
+                                        <i class="material-icons">send</i> Ajukan
+                             </button>
+
                         </div>
                     </div>
                 </div>
@@ -68,7 +79,7 @@
                                 <table id="myTable" class="table table-striped table-bordered" width="100%" cellspacing="0">
                                     <thead class="thead-light">
                                         <tr>
-                                            <th>ID</th>
+                                            <th>No</th>
                                             <th>NIP</th>
                                             <th>Nama</th>
                                             <th>Jabatan</th>
@@ -119,7 +130,7 @@
                 &copy;
                 <script>
                     document.write(new Date().getFullYear())
-                </script>, Adhitya Pratama, S.Kom & Team - Version 1.0
+                </script>, Team IT Dinas PUPR Natuna - Version 2.0
             </div>
         </div>
     </footer>
@@ -161,18 +172,13 @@
                                     <button id="show-user" type="button" class="btn btn-danger">Pilih</button>
                                 </div>
                             </div>
-                            {{-- <div class="mb-3">
+                            <div class="mb-3">
                                 <label class="form-label"> Jabatan </label>
                                 <input id="jabatan" type="text" class="form-control" name="jabatan">
-                            </div> --}}
+                            </div>
                             <div class="mb-3">
-                                <label class="form-label"> Jabatan` </label>
-                                <select id="jabatan" name="jabatan" class="form-control">
-                                    <option value="Juru Muda">Juru Muda</option>
-                                    <option value="Juru Muda Tingkat I">Juru Muda Tingkat I</option>
-                                    <option value="Juru">Juru</option>
-                                    <option value="Juru Tingkat I">Juru Tingkat I</option>
-                                    <option value="Pengatur Muda">Pengatur Muda</option>
+                                <label class="form-label"> Pangkat/Golongan </label>
+                                 <select id="pangkat" name="pangkat" class="form-control">
                                     <option value="Pengatur Muda Tingkat I">Pengatur Muda Tingkat I</option>
                                     <option value="Pengatur">Pengatur</option>
                                     <option value="Pengatur Tingkat I">Pengatur Tingkat I</option>
@@ -187,10 +193,6 @@
                                     <option value="Pembina Utama Madya">Pembina Utama Madya</option>    
                                     <option value="Pembina Utama">Pembina Utama</option>    
                                 </select>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label"> Pangkat/Golongan </label>
-                                <input id="pangkat" type="text" class="form-control" name="pangkat">
                             </div>
                             <div class="mb-3">
                                 <label class="form-label"> TMT KGB Terakhir </label>
@@ -244,6 +246,11 @@
 
     @endsection
 
+
+
+
+
+
     @section('modal-hapus')
         <!-- [ Modal Delete ] start -->
         <div class="modal fade" id="modal-hapus" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -295,11 +302,60 @@
                     {{-- <div class="modal-footer align-center">
                     <button type="button" class="btn btn-warning tutup" data-dismiss="modal">Tutup</button>
                     {{-- <button type="button" class="btn btn-danger" id="confirm">Ya</button> --}}
-                </div> --}}
+
+                </div> 
             </div>
         </div>
     </div>
     <!-- [ Modal User ] end -->
+    
+    
+    <!-- Modal Form Pengajuan -->
+<!-- Modal Pengajuan -->
+<div class="modal fade" id="pengajuanModal" tabindex="-1" role="dialog" aria-labelledby="pengajuanModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="pengajuanModalLabel">Edit Pengajuan KGB</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="formPengajuan" method="POST" action="/api/pengajuan/post">
+                    @csrf
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="nomor_surat">Nomor Surat</label>
+                            <input type="text" class="form-control" id="nomor_surat" name="nomor_surat" required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="tanggal_surat">Tanggal Surat</label>
+                            <input type="date" class="form-control" id="tanggal_surat" name="tanggal_surat" required>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="penanda_tangan">Penanda Tangan</label>
+                            <select class="form-control" id="penanda_tangan" name="penanda_tangan" required>
+                                <option value="Drs. H. AGUS SUPARDI, M.Si">Drs. H. AGUS SUPARDI, M.Si</option>
+                                <option value="NILA MISDARTIANA, SH, M.A.P">NILA MISDARTIANA, SH, M.A.P</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="daftar_pegawai">Pilih Pegawai:</label>
+                        <select class="form-control" id="daftar_pegawai" name="daftar_pegawai[]" multiple required style="height: 150px;">
+                            <!-- Options will be populated by AJAX -->
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Ajukan</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    
 @endsection
 
 @push('scriptku')
@@ -309,61 +365,66 @@
         });
 
 
-        // function get untuk data tables
         const getDataTables = (url) => {
-            $(document).ready(function() {
-                $('#myTable').DataTable({
-                    processing: true,
-                    bDestroy: true,
-                    serverSide: true,
-                    
-                    ajax: url,
-                    "createdRow": function(row, data, dataIndex) {
-                        if (data['stats'] === true) {
-                            // $(row).css("background-color", "Orange");
-                            $(row).addClass("bg-danger text-white");
-                        }
+    $(document).ready(function() {
+        $('#myTable').DataTable({
+            processing: true,
+            bDestroy: true,
+            serverSide: true,
+            ajax: url,
+            "createdRow": function(row, data, dataIndex) {
+                if (data['stats'] === true) {
+                    $(row).addClass("bg-danger text-white");
+                }
+            },
+            columns: [
+                // Kolom "No" (ditambahkan secara manual)
+                { 
+                    data: null,
+                    render: function(data, type, row, meta) {
+                        // Mengembalikan nomor urut berdasarkan posisi baris (1, 2, 3, ...)
+                        return meta.row + 1;
+                    }
+                },
+                // Kolom-kolom lain yang ingin Anda tampilkan
+                {
+                    data: 'nip',
+                },
+                {
+                    data: 'nama_pegawai',
+                },
+                {
+                    data: 'jabatan',
+                },
+                {
+                    data: 'pangkat',
+                },
+                {
+                    data: function(data) {
+                        return getTanggal(data.kgb_terakhir);
                     },
-                    columns: [{
-                            data: 'id',
-                        },
-                        {
-                            data: 'nip',
-                        },
-                        {
-                            data: 'nama_pegawai',
-                        },
-                        {
-                            data: 'jabatan',
-                        },
-                        {
-                            data: 'pangkat',
-                        },
-                        {
-                            data: function(data) {
-                                return getTanggal(data.kgb_terakhir)
-                            },
+                },
+                {
+                    data: function(data) {
+                        return getTanggal(data.deadline);
+                    },
+                },
+                {
+                    data: 'status',
+                },
+                {
+                    data: 'gaji',
+                },
+                {
+                    data: 'action',
+                },
+            ]
+        });
+    });
+}
 
-                        },
-                        {
-                            data: function(data) {
-                                return getTanggal(data.deadline)
-                            },
 
-                        },
-                        {
-                            data: 'status',
-                        },
-                        {
-                            data: 'gaji',
-                        },
-                        {
-                            data: 'action',
-                        },
-                    ]
-                });
-            });
-        }
+
 
         // ----------------------------------------------------------------
         // ---------------- Bagian untuk add ------------------------------
@@ -502,6 +563,7 @@
                     }
                 },
                 error: function(e) {
+                    console.log(e)
                     $('#add-alert').append(`<div class="alert alert-warning mt-3" role="alert">
                                     ${e}
                                 </div>`);
@@ -723,7 +785,7 @@
                 $('#tableku').html(`<table id="myTable" class="table table-striped table-bordered" width="100%" cellspacing="0">
                             <thead class="thead-light">
                                 <tr>
-                                    <th>ID</th>
+                                    <th>No</th>
                                     <th>NIP</th>
                                     <th>Nama</th>
                                     <th>Jabatan</th>
@@ -901,6 +963,127 @@
 
             return `${tanggal}-${bulanIndo}-${tahun}`
         }
+        
+         $(document).ready(function() {
+            // Tampilkan modal Surat Pengantar saat tombol ditekan
+            $('#btnModalSuratPengantar').click(function() {
+                $('#suratPengantarModal').modal('show');
+
+                // Ambil data pegawai dengan kriteria deadline KGB
+                $.get('api/deadlineEkgb', function(response) {
+                    var dataPegawai = response.data;
+                    var tbody = $('#tbodyPegawai');
+
+                    // Kosongkan isi tbody terlebih dahulu
+                    tbody.empty();
+
+                    // Loop untuk menambahkan data pegawai ke dalam tabel
+                    $.each(dataPegawai, function(index, pegawai) {
+                        var row = `
+                            <tr>
+                                <td>${index + 1}</td>
+                                <td>${pegawai.nip}</td>
+                                <td>${pegawai.nama_pegawai}</td>
+                                <td>${pegawai.jabatan}</td>
+                            </tr>
+                        `;
+                        tbody.append(row);
+                    });
+                });
+            });
+
+            // Aksi saat tombol "Buat Surat Pengantar" ditekan
+            $('#btnGenerateSurat').click(function() {
+                // Ambil nilai dari form input Surat Pengantar
+                var tempat = $('#tempatSurat').val();
+                var tanggal = $('#tanggalSurat').val();
+                var nomorSurat = $('#nomorSurat').val();
+
+                // Ambil data pegawai yang dipilih dari tabel
+                var dataPegawai = [];
+                $('#tablePegawai tbody tr').each(function(index, tr) {
+                    var nip = $(tr).find('td:eq(1)').text();
+                    var nama = $(tr).find('td:eq(2)').text();
+                    var jabatan = $(tr).find('td:eq(3)').text();
+                    dataPegawai.push({ nip: nip, nama_pegawai: nama, jabatan: jabatan });
+                });
+
+                // Kirim data untuk pembuatan surat pengantar ke backend atau lakukan proses lainnya
+                console.log('Tempat:', tempat);
+                console.log('Tanggal:', tanggal);
+                console.log('Nomor Surat:', nomorSurat);
+                console.log('Data Pegawai:', dataPegawai);
+
+                // Reset form dan tutup modal setelah selesai
+                $('#formSuratPengantar')[0].reset();
+                $('#suratPengantarModal').modal('hide');
+            });
+        });
+        
+        //--------------------bagian tambah pengajuan-------------//
+
+$(document).ready(function() {
+    // Event handler saat tombol Ajukan diklik
+    $('#ajukan').on('click', function() {
+        $('#pengajuanModal').modal('show'); // Tampilkan modal Pengajuan
+        $('#daftar_pegawai').empty(); // Kosongkan opsi pegawai terlebih dahulu
+
+        // Panggil API atau controller untuk mendapatkan data pegawai dengan deadline KGB
+        $.ajax({
+            url: '{{ route('deadline-ekgb') }}',
+            type: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                console.log('Response from deadline-ekgb:', response);
+                // Proses data pegawai yang diterima
+                if (response.data && response.data.length > 0) {
+                    $.each(response.data, function(index, pegawai) {
+                        // Tambahkan nomor urut pada opsi pegawai
+                        $('#daftar_pegawai').append(`<option value="${pegawai.id_user}">${index + 1}. ${pegawai.nama_pegawai}</option>`);
+                    });
+                } else {
+                    $('#daftar_pegawai').append('<option value="">Tidak ada pegawai dengan deadline KGB</option>');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Error:', error);
+                $('#daftar_pegawai').empty().append('<option value="">Error mengambil data pegawai</option>');
+            }
+        });
+    });
+
+    // Submit form pengajuan
+    $('#formPengajuan').on('submit', function(e) {
+        e.preventDefault();
+        // Kirim data pengajuan ke controller melalui AJAX
+        $.ajax({
+            url: '{{ route('api-post-pengajuan') }}', 
+            type: 'POST',
+            data: $(this).serialize(),
+            dataType: 'json',
+            success: function(response) {
+                console.log('Response from post-pengajuan:', response);
+                // Tampilkan pesan sukses atau error sesuai hasil dari controller
+                alert(response.message);
+                $('#pengajuanModal').modal('hide'); // Sembunyikan modal setelah selesai
+            },
+            error: function(xhr, status, error) {
+                console.error('Error:', error);
+                var errorMessage = 'Terjadi kesalahan saat menyimpan pengajuan';
+
+                if (xhr.responseJSON && xhr.responseJSON.errors) {
+                    errorMessage += ': ';
+                    $.each(xhr.responseJSON.errors, function(key, value) {
+                        errorMessage += value[0] + ' ';
+                    });
+                } else if (xhr.responseJSON && xhr.responseJSON.message) {
+                    errorMessage += ': ' + xhr.responseJSON.message;
+                }
+                alert(errorMessage);
+            }
+        });
+    });
+});
     </script>
     
 @endpush

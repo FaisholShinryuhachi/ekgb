@@ -3,7 +3,7 @@
 @section('sidebar')
     <div class="sidebar-wrapper">
         <ul class="nav">
-            <li class="nav-item ">
+            <li class="nav-item">
                 <a class="nav-link" href="{{ route('admin') }}">
                     <i class="material-icons">dashboard</i>
                     <p>Dashboard</p>
@@ -12,13 +12,25 @@
             <li class="nav-item ">
                 <a class="nav-link" href="{{ route('ekgb') }}">
                     <i class="material-icons">content_paste</i>
-                    <p>E-kgb</p>
+                    <p>Ekgb</p>
+                </a>
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link" href="{{ route('admin.pengajuan.tampilPengajuanKGB') }}">
+                    <i class="material-icons">send</i>
+                    <p>Pengajuan</p>
                 </a>
             </li>
             <li class="nav-item ">
                 <a class="nav-link" href="{{ route('user-table') }}">
                     <i class="material-icons">switch_account</i>
                     <p>User</p>
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="{{ route('admin-about') }}">
+                    <i class="material-icons">bubble_chart</i>
+                    <p>About</p>
                 </a>
             </li>
         </ul>
@@ -40,15 +52,12 @@
                     </a>
                 </div>
                 <div class="card-body">
-                    <h6 class="card-title">Sistem Monitoring Kenaikan Gaji Berkala E-KGB - Version 1.0 (28 Oktober 2021)</h6>
+                    <h6 class="card-title">Sistem Monitoring Kenaikan Gaji Berkala E-KGB - Version 2.0 (17 Juli 2024)</h6>
                     <h6 class="card-title"></h6>
                     <h6 class="card-title">Developer :</h6>
                     <h4 class="card-title">Adhitya Pratama, S.Kom</h4>
                     <h6 class="card-category text-gray">Pranata Komputer Ahli Pertama</h6>
-                    <h4 class="card-title">NIP. 19940715 202012 1 009</h4>
-                    <p class="card-description">
-                        Instansi : Dinas Pekerjaan Umum dan Penataan Ruang Kabupaten Natuna
-                    </p>
+             
                     <a href="https://dpupr.natunakab.go.id/" class="btn btn-primary btn-round">Website Dinas</a>
                 </div>
             </div>
@@ -85,7 +94,7 @@
                 &copy;
                 <script>
                     document.write(new Date().getFullYear())
-                </script>, Adhitya Pratama, S.Kom & Team - Version 1.0
+                </script>,Team IT Dinas PUPR Natuna - Version 2.0
             </div>
         </div>
     </footer>

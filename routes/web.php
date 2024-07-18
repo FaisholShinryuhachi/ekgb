@@ -9,6 +9,10 @@ use App\Http\Controllers\AdminController;
 
 use Illuminate\Support\Facades\Auth;
 
+Route::get('sandboxku', function() {
+    $exitCode = Artisan::call('cache:clear');
+});
+
 // Route::get('/', [AuthController::class, 'showFormLogin'])->name('login');
 // Route::get('login', [AuthController::class, 'showFormLogin'])->name('login');
 // Route::post('login', [AuthController::class, 'login']);
@@ -59,6 +63,27 @@ Route::post('api/ekgb/edit', [KgbController::class, 'editEkgb'])->name('api-edit
 Route::get('admin/ekgb/delete/{id}', [KgbController::class, 'deleteEkgb']);
 Route::get('admin/api/ekgb/edit-get/{id}', [KgbController::class, 'getForEdit'])->name('api-get-edit-ekgb');
 
+
+
+
+
+
+
+// ---------------------------------------------------------
+// ------------------- Modul Pengajuan ---------------------
+// ---------------------------------------------------------
+Route::get('admin/pengajuan', [KGBController::class, 'tampilPengajuan'])->name('admin.pengajuan.tampilPengajuanKGB');
+Route::get('deadline-ekgb', [KgbController::class, 'deadlineEkgb'])->name('deadline-ekgb');
+Route::post('api/pengajuan/post', [KgbController::class, 'postPengajuan'])->name('api-post-pengajuan');
+Route::get('admin/pengajuan/delete/{id}', [KgbController::class, 'destroyPengajuan'])->name('pengajuan.destroy');
+Route::get('admin/pengajuan/surat-pengantar/{id}', [KgbController::class, 'suratPengantar'])->name('pengajuan.suratPengantar');
+Route::get('/pengajuan/{id_pengajuan}/edit', [KgbController::class, 'editPengajuan'])->name('pengajuan.edit');
+Route::put('/pengajuan/{id_pengajuan}', [KgbController::class, 'updatePengajuan'])->name('pengajuan.update');
+
+
+
+
+
 // Fitur Khusus Admin
 Route::get('api/ekgb/deadline', [KgbController::class, 'deadlineEkgb'])->name('api-khusus-deadline');
 Route::get('api/ekgb/aktif', [KgbController::class, 'aktifEkgb'])->name('api-khusus-aktif');
@@ -73,6 +98,7 @@ Route::get('admin/api/user/get', [MyUserController::class, 'getUser'])->name('ap
 Route::post('api/user/post', [MyUserController::class, 'addUser'])->name('api-post-user');
 Route::get('admin/api/user/edit-get/{id}', [MyUserController::class, 'getForEdit'])->name('api-get-edit-user');
 Route::post('api/user/edit', [MyUserController::class, 'postEdit'])->name('api-edit-user');
+
 Route::get('api/user/kgb/get/', [MyUserController::class, 'getUserKgb'])->name('api-get-kgb-user');
 Route::get('admin/user/delete/{id}', [MyUserController::class, 'deleteUser']);
 
@@ -121,6 +147,7 @@ Route::middleware(['pegawai'])->group(function () {
 // ---------------------------------------------------------
 Route::middleware(['admin'])->group(function () {
     Route::get('admin', [AdminController::class, 'index'])->name('admin');
+    
     Route::prefix('admin')->group(function () {
         Route::get('/ekgb', function () {
             return view('material.admin.table');
@@ -136,3 +163,5 @@ Route::middleware(['admin'])->group(function () {
 
 // Route::get('pegawai', [PegawaiController::class, 'index'])->middleware('pegawai')->name('pegawai');
 // Route::get('admin', [AdminController::class, 'index'])->middleware('admin')->name('admin');
+
+

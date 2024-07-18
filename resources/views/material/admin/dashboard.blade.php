@@ -3,7 +3,7 @@
 @section('sidebar')
     <div class="sidebar-wrapper">
         <ul class="nav">
-            <li class="nav-item active ">
+            <li class="nav-item active">
                 <a class="nav-link" href="{{ route('admin') }}">
                     <i class="material-icons">dashboard</i>
                     <p>Dashboard</p>
@@ -12,19 +12,25 @@
             <li class="nav-item ">
                 <a class="nav-link" href="{{ route('ekgb') }}">
                     <i class="material-icons">content_paste</i>
-                    <p>E-kgb</p>
+                    <p>Ekgb</p>
                 </a>
             </li>
-            <li class="nav-item ">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin.pengajuan.tampilPengajuanKGB') }}">
+                    <i class="material-icons">send</i>
+                    <p>Pengajuan</p>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="{{ route('user-table') }}">
                     <i class="material-icons">switch_account</i>
                     <p>User</p>
                 </a>
             </li>
-            <li class="nav-item ">
-                <a class="nav-link" href="{{ route('logout') }}">
-                    <i class="material-icons">logout</i>
-                    <p>Logout</p>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin-about') }}">
+                    <i class="material-icons">bubble_chart</i>
+                    <p>About</p>
                 </a>
             </li>
 
@@ -33,7 +39,7 @@
 @endsection
 
 @section('content')
-
+ {{-- 
 <div class="row d-flex justify-content-center">
     <div class="col-lg-12">
         <div class="card card-profile">
@@ -43,6 +49,8 @@
         </div>
     </div>
 </div>
+Bagin Atas --}}
+
 <div class="row">
     <div class="col-lg-12">
         <div class="card">
@@ -84,7 +92,7 @@
                     <div class="card-icon">
                         <i class="material-icons">content_copy</i>
                     </div>
-                    <p class="card-category">Sedang Dalam Proses</p>
+                    <p class="card-category">Sudah Dalam Proses</p>
                     <div id="proses">
                     </div>
                 </div>
@@ -127,7 +135,7 @@
         <div class="col-lg-6 col-md-12 col-sm-6">
             <div class="card">
                 <div class="card-header card-header-success">
-                    <h4 class="card-title">Data Yang Sedang Di Proses</h4>
+                    <h4 class="card-title">Data Yang Sudah Di Proses</h4>
                     <marquee>
                         <p class="card-category">Mohon lakukan cek berkala</p>
                     </marquee>
@@ -185,7 +193,7 @@
                 &copy;
                 <script>
                     document.write(new Date().getFullYear())
-                </script>, Adhitya Pratama, S.Kom & Team Version 1.0
+                </script>, Team IT Dinas PUPR Natuna - Version 2.0
             </div>
         </div>
     </footer>

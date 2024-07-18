@@ -3,7 +3,7 @@
 @section('sidebar')
     <div class="sidebar-wrapper">
         <ul class="nav">
-            <li class="nav-item  ">
+            <li class="nav-item">
                 <a class="nav-link" href="{{ route('admin') }}">
                     <i class="material-icons">dashboard</i>
                     <p>Dashboard</p>
@@ -12,13 +12,25 @@
             <li class="nav-item ">
                 <a class="nav-link" href="{{ route('ekgb') }}">
                     <i class="material-icons">content_paste</i>
-                    <p>E-kgb</p>
+                    <p>Ekgb</p>
                 </a>
             </li>
-            <li class="nav-item active ">
+            <li class="nav-item ">
+                <a class="nav-link" href="{{ route('admin.pengajuan.tampilPengajuanKGB') }}">
+                    <i class="material-icons">send</i>
+                    <p>Pengajuan</p>
+                </a>
+            </li>
+            <li class="nav-item active">
                 <a class="nav-link" href="{{ route('user-table') }}">
                     <i class="material-icons">switch_account</i>
                     <p>User</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin-about') }}">
+                    <i class="material-icons">bubble_chart</i>
+                    <p>About</p>
                 </a>
             </li>
         </ul>
@@ -97,7 +109,7 @@
                 &copy;
                 <script>
                     document.write(new Date().getFullYear())
-                </script>, Adhitya Pratama, S.Kom & Team
+                </script>, Team IT Dinas PUPR Natuna - Version 2.0
             </div>
         </div>
     </footer>

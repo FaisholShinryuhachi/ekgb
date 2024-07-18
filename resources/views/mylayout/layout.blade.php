@@ -26,6 +26,9 @@ The above copyright notice and this permission notice shall be included in all c
         href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha384-jLKHWM4Fgg3xC1W98+PEYfZLZ/x0B3g5h5g1qBZIbIcU5qE5d9LJ1+xC2Q2K5vX1" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha384-jLKHWM4Fgg3xC1W98+PEYfZLZ/x0B3g5h5g1qBZIbIcU5qE5d9LJ1+xC2Q2K5vX1" crossorigin="anonymous">
+    <!-- CSS lainnya -->
 
 
     <!-- CSS Files -->
@@ -33,14 +36,18 @@ The above copyright notice and this permission notice shall be included in all c
     <link href="{{ asset('material/assets/css/custom.css') }}" rel="stylesheet" />
 
   <!-- PDF FILE -->
-  
+  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.0.0/css/buttons.dataTables.min.css">
+  <script src="https://cdn.datatables.net/buttons/2.0.0/js/dataTables.buttons.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.0.0/js/buttons.html5.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 
 </head>
 
 <body class="">
     <div class="wrapper ">
-        <div class="sidebar" data-color="purple" data-background-color="yellow"
-            data-image="{{ asset('material/assets/img/sidebar-10.jpg') }}">
+        <div class="sidebar" data-color="blue" data-background-color="yellow"
+            data-image="{{ asset('material/assets/img/sidebar-3.jpg') }}">
             <div class="logo"><a href="#" class="simple-text logo-normal">
                     E-KGB
                 </a></div>
