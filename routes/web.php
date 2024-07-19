@@ -9,7 +9,7 @@ use App\Http\Controllers\AdminController;
 
 use Illuminate\Support\Facades\Auth;
 
-Route::get('sandboxku', function() {
+Route::get('sandboxku', function () {
     $exitCode = Artisan::call('cache:clear');
 });
 
@@ -126,7 +126,7 @@ Route::get('logout', function () {
 })->name('logout');
 
 Auth::routes([
-    'register' => false, // Registration Routes...
+    'register' => true, // Registration Routes...
     'reset' => false, // Password Reset Routes...
     'verify' => false, // Email Verification Routes...
 ]);
@@ -147,7 +147,7 @@ Route::middleware(['pegawai'])->group(function () {
 // ---------------------------------------------------------
 Route::middleware(['admin'])->group(function () {
     Route::get('admin', [AdminController::class, 'index'])->name('admin');
-    
+
     Route::prefix('admin')->group(function () {
         Route::get('/ekgb', function () {
             return view('material.admin.table');
@@ -163,5 +163,3 @@ Route::middleware(['admin'])->group(function () {
 
 // Route::get('pegawai', [PegawaiController::class, 'index'])->middleware('pegawai')->name('pegawai');
 // Route::get('admin', [AdminController::class, 'index'])->middleware('admin')->name('admin');
-
-
